@@ -21,6 +21,7 @@ public class UserAcc {
     private String address;//optional?
 
     private TreeSet<Message> messages = new TreeSet<>();
+    private TreeSet<Offer> offers = new TreeSet<>();
 
     public UserAcc(String mail, String password, String userName) throws IllegalArgumentException {
         this.setEmail(mail);

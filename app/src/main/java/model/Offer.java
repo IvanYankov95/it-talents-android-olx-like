@@ -1,12 +1,14 @@
 package model;
 
+import android.support.annotation.NonNull;
+
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by Mitakaa on 30-Jan-16.
  */
-public class Offer {
+public class Offer implements Comparable<Offer> {
 
     private boolean isActive;
     private Date dateOfCreating;
@@ -52,5 +54,14 @@ public class Offer {
         isActive = true;
     }
 
+    @Override
+    public int compareTo(@NonNull Offer another) {
+        if(dateOfCreating.after(another.dateOfCreating))
+            return 1;
+        if(dateOfCreating.before(another.dateOfCreating))
+            return -1;
+
+        return 0;
+    }
 
 }
