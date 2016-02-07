@@ -18,6 +18,7 @@ public class UserAcc {
     private String phoneNumber; //this field is required
     private String secondPhoneNumber; //optional
 
+    private String city;
     private String address;//optional?
 
     private TreeSet<Message> messages = new TreeSet<>();
@@ -27,6 +28,22 @@ public class UserAcc {
         this.setEmail(mail);
         this.setPassword(password);
         this.setUserName(userName);
+        this.messages = new TreeSet<>();
+        this.offers = new TreeSet<>();
+    }
+
+    public void addOffer(String name, String description, double price, Offer.ProductCondition productCondition, Offer.Category category){
+        Offer offer = new Offer(this, name, description, price, productCondition, category);
+
+        this.offers.add(offer);
+    }
+
+    public void archiveOffer(Offer offer){
+        offer.switchIfActive(false);
+    }
+
+    public void reactivateOffer(Offer offer){
+        offer.switchIfActive(true);
     }
 
     public void sendMessage(UserAcc userAcc, String heading, String text){
@@ -133,5 +150,13 @@ public class UserAcc {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
