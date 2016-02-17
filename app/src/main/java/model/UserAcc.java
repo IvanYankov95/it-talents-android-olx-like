@@ -77,29 +77,7 @@ public class UserAcc {
         return password;
     }
 
-    //това ще трябва да се промени само засега е така. Ще трябва да проверяваме дали паролата огтоваря на изискванята но след това да я криптираме и записваме.
-    public void setPassword(String password) throws IllegalArgumentException {
-        char[] test = password.toCharArray();
-
-        boolean lowercase = false;
-        boolean uppercase = false;
-        boolean number = false;
-
-        if(test.length < 8)
-            throw new IllegalArgumentException();
-
-        for (char aTest : test) {
-            if (aTest >= 65 && aTest <= 90)
-                lowercase = true;
-            if (aTest >= 97 && aTest <= 122)
-                uppercase = true;
-            if (aTest >= 48 && aTest <= 57)
-                number = true;
-        }
-
-        if(!lowercase || !uppercase || !number)
-            throw new IllegalArgumentException();
-
+    public void setPassword(String password) {
         this.password = password;
     }
 
