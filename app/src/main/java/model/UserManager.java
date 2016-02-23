@@ -15,21 +15,22 @@ public class UserManager {
     private static UserManager ourInstance;
     DatabaseHelper helper;
 
-    private UserManager() {
+    private UserManager(Context context) {
+        this.helper = new DatabaseHelper(context);
     }
 
-    public static UserManager getInstance() {
+    public static UserManager getInstance( Context context) {
         if(ourInstance == null)
-            ourInstance = new UserManager();
+            ourInstance = new UserManager(context);
         return ourInstance;
     }
 
     private boolean existUsername(String username){
-        return helper.selectUsername(username);
+        return helper.checkUsername(username);
     }
 
     private boolean existEmail(String email){
-        return helper.selectUserEmail(email);
+        return helper.checkUserEmail(email);
     }
 
 

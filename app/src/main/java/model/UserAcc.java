@@ -16,7 +16,6 @@ public class UserAcc {
     private String lastName;//this field is required
 
     private String phoneNumber; //this field is required
-    private String secondPhoneNumber; //optional
 
     private String city;
     private String address;//optional?
@@ -30,6 +29,16 @@ public class UserAcc {
         this.setUserName(userName);
         this.messages = new TreeSet<>();
         this.offers = new TreeSet<>();
+    }
+
+    public UserAcc(String mail, String password, String userName, String firstName, String lastName, String phoneNumber, String city, String address) throws IllegalArgumentException {
+        this(mail, password, userName);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setPhoneNumber(phoneNumber);
+        this.setCity(city);
+        this.setAddress(address);
+
     }
 
     public void addOffer(String name, String description, double price, Offer.ProductCondition productCondition, Offer.Category category){
@@ -112,14 +121,6 @@ public class UserAcc {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getSecondPhoneNumber() {
-        return secondPhoneNumber;
-    }
-
-    public void setSecondPhoneNumber(String secondPhoneNumber) {
-        this.secondPhoneNumber = secondPhoneNumber;
     }
 
     public String getAddress() {
