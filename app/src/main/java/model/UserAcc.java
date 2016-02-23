@@ -8,6 +8,7 @@ import java.util.TreeSet;
  */
 public class UserAcc {
 
+    private long userId;
     CharSequence email;//this field is required
     private String password;//this field is required
 
@@ -138,4 +139,9 @@ public class UserAcc {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public long getUserId(){ return this.userId; }
+
+    public void setUserId (long id){this.userId = id;}
+
 }

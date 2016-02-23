@@ -28,4 +28,16 @@ public class Message implements Comparable<Message> {
 
         return 0;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public String getText() {
+        return text;
+    }
 }

@@ -25,12 +25,12 @@ public class Offer implements Comparable<Offer> {
     private UserAcc seller;
     private ProductCondition condition;
     private Category category;
-
+    private String city;
     private boolean isActive;
     private Date creationDate;
     private Date expiryDate;
 
-    public Offer(UserAcc seller, String name, String description, double price, ProductCondition productCondition, Category category) throws IllegalArgumentException {
+    public Offer(UserAcc seller, String name, String description, double price, ProductCondition productCondition, Category category, String city) throws IllegalArgumentException {
         if(seller == null)
             throw new IllegalArgumentException();
         this.setPrice(price);
@@ -43,6 +43,7 @@ public class Offer implements Comparable<Offer> {
             dateExpire.add(Calendar.MONTH, 1);
         this.expiryDate = dateExpire.getTime();
         this.isActive = true;
+        this.city = city;
     }
 
     public boolean checkIfActive() {
@@ -117,5 +118,33 @@ public class Offer implements Comparable<Offer> {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getCity() { return city; }
+
+    public void setCity(String city) {this.city = city;}
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 }

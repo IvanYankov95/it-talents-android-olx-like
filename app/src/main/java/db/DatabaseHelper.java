@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import model.Message;
+import model.Offer;
 import model.UserAcc;
 
 /**
@@ -150,8 +152,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // CRUD User
-
     // create user
     public long createUser(UserAcc user){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -167,7 +167,83 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(TELEPHONE, user.getPhoneNumber());
 
         long userId = db.insert(USERS, null, values);
+        db.close();
         return userId;
+    }
+
+    //OFFERS
+
+    public long createOffer(Offer offer, int userId, int categoryId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(USER_ID, userId);
+        values.put(CATEGORY_ID, categoryId);
+        values.put(TITLE, offer.getName());
+        values.put(PRICE, offer.getPrice());
+        values.put(CONDITION, String.valueOf(offer.getCondition()));
+        values.put(DESCRIPTION, offer.getDescription());
+        values.put(CITY, offer.getCity());
+        values.put(IS_ACTIVE, String.valueOf(offer.isActive()));
+        values.put(DATE, String.valueOf(offer.getCreationDate()));
+
+        long id = db.insert(OFFERS, null, values);
+        db.close();
+        return id;
+    }
+
+    // Messages CRUD
+    //Create message
+    public long creaeMessage(UserAcc sender, UserAcc receiver, Message msg){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SENDER_ID, sender.getUserId());
+        values.put(RECEIVER_ID, receiver.getUserId());
+        values.put(TITLE, msg.getHeading());
+        values.put(CONTENT, msg.getText());
+        values.put(DATE, String.valueOf(msg.getDate()));
+
+        long msgId = db.insert(MESSAGES, null, values);
+        return msgId;
+    }
+    // more for messages
+    // ............
+
+
+    //IMAGES
+    //create image
+    public long createImage(byte[] array, int offerId){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(OFFER_ID, offerId);
+        values.put(CONTENT, array);
+
+        long id = db.insert(IMAGES, null, values);
+        return id;
+    }
+    // Categories CRUD
+
+    //create category
+    public long addCategory(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(NAME, name);
+
+        long id =  db.insert(CATEGORIES, null, values);
+        db.close();
+        return id;
+    }
+
+    public boolean checkCategory(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + CATEGORIES
+                + " WHERE " + NAME + " = " + name;
+
+        Cursor c = db.rawQuery(query, null);
+        if(c != null)
+            return true;
+        else
+            return false;
+
     }
 
     //read single user by username
@@ -191,7 +267,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String phone = c.getString(c.getColumnIndex(TELEPHONE));
 
         UserAcc user = new UserAcc(uname, password, email, fname, lname, city, address, phone);
-
+        db.close();
         return user;
     }
 
@@ -218,7 +294,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 users.add(user);
             } while(c.moveToNext());
         }
-
+        db.close();
         return users;
     }
 
@@ -237,6 +313,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(TELEPHONE, user.getPhoneNumber());
 
         long userId = db.update(USERS, values, USERNAME + " = ? ", new String[]{user.getUserName()});
+        db.close();
         return userId;
     }
 
@@ -246,7 +323,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteUser(UserAcc user){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(USERS, USERNAME + " = ?",
-                new String[] { user.getUserName() });
+                new String[]{user.getUserName()});
     }
 
 
@@ -275,7 +352,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
     }
-
 
 
 
