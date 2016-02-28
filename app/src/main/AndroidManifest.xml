@@ -19,9 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".LogIn" />
-        <activity android:name=".ViewUser" />
-        <activity android:name=".SendMessage"></activity>
+        <activity android:name=".LogIn"></activity>
     </application>
 
 </manifest>
