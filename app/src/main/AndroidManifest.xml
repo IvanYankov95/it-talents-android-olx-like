@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".Register" />
         <activity android:name=".LogIn" />
-        <activity android:name=".ViewUserActivity"></activity>
+        <activity android:name=".ViewUser" />
+        <activity android:name=".SendMessage"></activity>
     </application>
 
 </manifest>
