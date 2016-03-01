@@ -26,7 +26,8 @@
         <activity android:name=".Settings" />
         <activity android:name=".EditEmail" />
         <activity android:name=".EditPassword" />
-        <activity android:name=".EditPersonalInfo"></activity>
+        <activity android:name=".EditPersonalInfo" />
+        <activity android:name=".EditOffer"></activity>
     </application>
 
 </manifest>
