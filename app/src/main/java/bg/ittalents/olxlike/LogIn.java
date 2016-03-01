@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import model.UserManager;
+import model.dao.DBUserDAO;
 
 public class LogIn extends AppCompatActivity {
 
@@ -27,9 +31,23 @@ public class LogIn extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO check mail and password from database
-
-                startActivity(new Intent(LogIn.this, Home.class));
+                String emailText = email.getText().toString();
+                String passwordText = password.getText().toString();
+                if(emailText.isEmpty()) {
+                    email.setError("This field is required.");
+                    return;
+                }
+                if(passwordText.isEmpty()){
+                    password.setError("This field is required.");
+                    return;
+                }
+                UserManager manager = UserManager.getInstance(LogIn.this);
+                if(manager.login(emailText, passwordText) == null){
+                    Toast.makeText(LogIn.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LogIn.this, "Login sucssessfull!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LogIn.this, Home.class));
+                }
             }
         });
     }
