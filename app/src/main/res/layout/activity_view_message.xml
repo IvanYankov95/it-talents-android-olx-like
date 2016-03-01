@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="bg.ittalents.olxlike.SendMessage">
+    tools:context="bg.ittalents.olxlike.ViewMessage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,14 +27,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To"
+            android:text="From"
             android:textSize="20dp"/>
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="To"
+            android:text="from"
             android:textAlignment="center"
             android:textSize="20dp"/>
 
@@ -52,11 +52,11 @@
             android:text="Title"
             android:textSize="20dp"/>
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="title"
+            android:text="title"
             android:textAlignment="center"
             android:textSize="20dp"/>
 
@@ -73,9 +73,7 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
+                android:layout_height="match_parent" />
         </ScrollView>
 
     </LinearLayout>
@@ -93,6 +91,5 @@
             android:textSize="20dp"/>
 
     </LinearLayout>
-
 
 </LinearLayout>
