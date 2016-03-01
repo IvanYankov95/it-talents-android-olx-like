@@ -29,7 +29,9 @@
         <activity android:name=".EditPersonalInfo" />
         <activity android:name=".EditOffer" />
         <activity android:name=".ViewMessage" />
-        <activity android:name=".Search"></activity>
+        <activity android:name=".Search" />
+        <activity android:name=".Category" />
+        <activity android:name=".SearchResult"></activity>
     </application>
 
 </manifest>
