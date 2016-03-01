@@ -23,7 +23,6 @@
             android:layout_weight="2">
 
             <ImageButton
-                android:background="#ffffff"
                 android:id="@+id/add_offer_main_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -45,7 +44,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <ImageView
+                <ImageButton
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -54,7 +53,7 @@
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
                     android:layout_weight="1"/>
-                <ImageView
+                <ImageButton
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -63,7 +62,7 @@
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
                     android:layout_weight="1"/>
-                <ImageView
+                <ImageButton
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -79,7 +78,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <ImageView
+                <ImageButton
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -88,7 +87,7 @@
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
                     android:layout_weight="1"/>
-                <ImageView
+                <ImageButton
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -97,7 +96,7 @@
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
                     android:layout_weight="1"/>
-                <ImageView
+                <ImageButton
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -169,6 +168,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="number"
                 android:id="@+id/add_offer_price_text" />
         </LinearLayout>
 

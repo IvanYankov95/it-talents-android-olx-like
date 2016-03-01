@@ -1,5 +1,6 @@
 package bg.ittalents.olxlike;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,13 +29,26 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddOffer extends AppCompatActivity {
+public class AddOffer extends AppCompatActivity implements View.OnClickListener {
 
-    public static final int IMAGE_GALLERY_REQUEST_1 = 20;
+    public static final int IMAGE_GALLERY_REQUEST_1 = 21;
+    public static final int IMAGE_GALLERY_REQUEST_2 = 22;
+    public static final int IMAGE_GALLERY_REQUEST_3 = 23;
+    public static final int IMAGE_GALLERY_REQUEST_4 = 24;
+    public static final int IMAGE_GALLERY_REQUEST_5 = 25;
+    public static final int IMAGE_GALLERY_REQUEST_6 = 26;
+    public static final int IMAGE_GALLERY_REQUEST_7 = 27;
+
 
     private boolean mainPictureCheck = false;
     
     private static ImageButton mainPicture;
+    private static ImageButton picture1;
+    private static ImageButton picture2;
+    private static ImageButton picture3;
+    private static ImageButton picture4;
+    private static ImageButton picture5;
+    private static ImageButton picture6;
     private static EditText title;
     private static Spinner categorySpinner;
     private static String selectedCategory;
@@ -50,6 +64,12 @@ public class AddOffer extends AppCompatActivity {
         setContentView(R.layout.activity_add_offer);
 
         mainPicture = (ImageButton) findViewById(R.id.add_offer_main_picture);
+        picture1 = (ImageButton) findViewById(R.id.add_offer_picture1);
+        picture2 = (ImageButton) findViewById(R.id.add_offer_picture2);
+        picture3 = (ImageButton) findViewById(R.id.add_offer_picture3);
+        picture4 = (ImageButton) findViewById(R.id.add_offer_picture4);
+        picture5 = (ImageButton) findViewById(R.id.add_offer_picture5);
+        picture6 = (ImageButton) findViewById(R.id.add_offer_picture6);
         title = (EditText) findViewById(R.id.add_offer_title_text);
         categorySpinner = (Spinner) findViewById(R.id.add_offer_category_spinner);
         price = (EditText) findViewById(R.id.add_offer_price_text);
@@ -67,21 +87,7 @@ public class AddOffer extends AppCompatActivity {
         categories.add("Personal");
         categories.add("Travel");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(dataAdapter);
 
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedCategory = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         mainPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +100,29 @@ public class AddOffer extends AppCompatActivity {
                 photoPickerIntent.setDataAndType(data, "image/*");
 
                 startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST_1);
+
+            }
+        });
+
+        picture1.setOnClickListener(this);
+        picture2.setOnClickListener(this);
+        picture3.setOnClickListener(this);
+        picture4.setOnClickListener(this);
+        picture5.setOnClickListener(this);
+        picture6.setOnClickListener(this);
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(dataAdapter);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCategory = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -170,31 +199,30 @@ public class AddOffer extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
-            mainPictureCheck = true;
-            if(requestCode == IMAGE_GALLERY_REQUEST_1){
-                Uri imageUrl = data.getData();
 
-                InputStream inputStream = null;
-
-                try {
-                    inputStream = getContentResolver().openInputStream(imageUrl);
-
-                    Bitmap image1 = BitmapFactory.decodeStream(inputStream);
-
-                    Drawable drawable = new BitmapDrawable(getResources(), image1);
-
-                    mainPicture.setImageDrawable(drawable);
-
-                } catch (FileNotFoundException e) {
-                    Toast.makeText(AddOffer.this, "Unable to open image", Toast.LENGTH_SHORT).show();
-                } finally {
-                    try {
-                        if (inputStream != null)
-                            inputStream.close();
-                    } catch (Exception e){
-
-                    }
-                }
+            switch (requestCode){
+                case IMAGE_GALLERY_REQUEST_1:
+                    setPicture(mainPicture,data);
+                    mainPictureCheck = true;
+                    break;
+                case IMAGE_GALLERY_REQUEST_2:
+                    setPicture(picture1,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_3:
+                    setPicture(picture2,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_4:
+                    setPicture(picture3,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_5:
+                    setPicture(picture4,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_6:
+                    setPicture(picture5,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_7:
+                    setPicture(picture6,data);
+                    break;
 
             }
         }
@@ -234,5 +262,66 @@ public class AddOffer extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.add_offer_picture1:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_2);
+                break;
+            case R.id.add_offer_picture2:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_3);
+                break;
+            case R.id.add_offer_picture3:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_4);
+                break;
+            case R.id.add_offer_picture4:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_5);
+                break;
+            case R.id.add_offer_picture5:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_6);
+                break;
+            case R.id.add_offer_picture6:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_7);
+                break;
+        }
+    }
+
+    private void askForPhotoWithIntent(int request){
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String pictureDirectoryPath = pictureDirectory.getPath();
+        Uri data = Uri.parse(pictureDirectoryPath);
+
+        photoPickerIntent.setDataAndType(data, "image/*");
+
+        startActivityForResult(photoPickerIntent, request);
+    }
+
+    private void setPicture(ImageButton button, Intent data){
+        Uri imageUrl = data.getData();
+
+        InputStream inputStream = null;
+
+        try {
+            inputStream = getContentResolver().openInputStream(imageUrl);
+
+            Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+            Drawable drawable = new BitmapDrawable(getResources(), image);
+
+            button.setImageDrawable(drawable);
+
+        } catch (FileNotFoundException e) {
+            Toast.makeText(AddOffer.this, "Unable to open image", Toast.LENGTH_SHORT).show();
+        } finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+            } catch (Exception e){
+
+            }
+        }
     }
 }
