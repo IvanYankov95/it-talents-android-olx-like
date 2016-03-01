@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -195,5 +198,41 @@ public class AddOffer extends AppCompatActivity {
 
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_offer:
+                startActivity(new Intent(AddOffer.this, AddOffer.class));
+                break;
+            case R.id.action_home:
+                startActivity(new Intent(AddOffer.this, Home.class));
+                break;
+            case R.id.action_messages:
+                startActivity(new Intent(AddOffer.this, MyMessages.class));
+                break;
+            case R.id.action_profile:
+                //TODO да се направи да праща към твоя профил ...
+                startActivity(new Intent(AddOffer.this, ViewUser.class));
+                break;
+            case R.id.action_settings:
+                startActivity(new Intent(AddOffer.this, Settings.class));
+                break;
+            case R.id.action_logout:
+                //TODO да те логаутва...
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 }
