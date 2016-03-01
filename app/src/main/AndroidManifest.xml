@@ -22,7 +22,8 @@
         <activity android:name=".LogIn" />
         <activity android:name=".ViewUser" />
         <activity android:name=".SendMessage" />
-        <activity android:name=".MyMessages"></activity>
+        <activity android:name=".MyMessages" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>
