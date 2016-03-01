@@ -20,9 +20,12 @@
             android:layout_height="match_parent"
             android:layout_weight="2">
 
-            <ImageView
+            <Button
+                android:id="@+id/add_offer_main_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="Add main picture"
+
                 />
 
         </LinearLayout>
@@ -89,7 +92,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Title"/>
+                android:text="Title"
+                android:textSize="25dp"
+                android:gravity="center" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -106,7 +111,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Category"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:gravity="center" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/spinner"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +129,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Price"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:gravity="center" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -174,7 +187,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="description"/>
+                android:hint="description (max 2000 symbols)" />
 
         </LinearLayout>
 
@@ -187,7 +200,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="City"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:gravity="center" />
 
             <EditText
                 android:layout_width="match_parent"

@@ -39,7 +39,6 @@
         android:ems="10"
         android:id="@+id/passwordField"
         android:layout_below="@+id/emailField"
-        android:onClick="goToRegister"
         android:hint="@string/passwordHintLogIn"
         android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
