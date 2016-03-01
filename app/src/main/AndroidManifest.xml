@@ -25,7 +25,8 @@
         <activity android:name=".MyMessages" />
         <activity android:name=".Settings" />
         <activity android:name=".EditEmail" />
-        <activity android:name=".EditPassword"></activity>
+        <activity android:name=".EditPassword" />
+        <activity android:name=".EditPersonalInfo"></activity>
     </application>
 
 </manifest>
