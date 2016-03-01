@@ -23,6 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -39,8 +40,9 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
     public static final int IMAGE_GALLERY_REQUEST_6 = 26;
     public static final int IMAGE_GALLERY_REQUEST_7 = 27;
 
+    private static ArrayList<byte[]> pictures;
 
-    private boolean mainPictureCheck = false;
+    private static boolean mainPictureCheck = false;
     
     private static ImageButton mainPicture;
     private static ImageButton picture1;
@@ -62,6 +64,8 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_offer);
+
+        pictures = new ArrayList<byte[]>();
 
         mainPicture = (ImageButton) findViewById(R.id.add_offer_main_picture);
         picture1 = (ImageButton) findViewById(R.id.add_offer_picture1);
@@ -310,6 +314,12 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
             Bitmap image = BitmapFactory.decodeStream(inputStream);
 
             Drawable drawable = new BitmapDrawable(getResources(), image);
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+            pictures.add(stream.toByteArray());
 
             button.setImageDrawable(drawable);
 
