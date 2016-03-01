@@ -42,11 +42,11 @@ public class UserAcc {
 
     }
 
-    public void addOffer(String name, String description, double price, Offer.ProductCondition productCondition, Offer.Category category, String city){
-        Offer offer = new Offer(this, name, description, price, productCondition, category, city);
-
-        this.offers.add(offer);
-    }
+//    public void addOffer(String name, String description, double price, Offer.ProductCondition productCondition, Offer.Category category, String city){
+//        Offer offer = new Offer(this, name, description, price, productCondition, category, city);
+//
+//        this.offers.add(offer);
+//    }
 
     public void archiveOffer(Offer offer){
         offer.switchIfActive(false);
