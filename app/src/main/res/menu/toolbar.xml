@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_add_offer"
+        app:showAsAction="always"
+        android:title="Add offer"/>
+
+    <item
+        android:id="@+id/action_home"
+        android:title="Home"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/action_messages"
+        android:title="Messages"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="Profile"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Settings"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="Log out"
+        app:showAsAction="never">
+    </item>
+
+</menu>
