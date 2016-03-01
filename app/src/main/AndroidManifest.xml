@@ -28,7 +28,8 @@
         <activity android:name=".EditPassword" />
         <activity android:name=".EditPersonalInfo" />
         <activity android:name=".EditOffer" />
-        <activity android:name=".ViewMessage"></activity>
+        <activity android:name=".ViewMessage" />
+        <activity android:name=".Search"></activity>
     </application>
 
 </manifest>
