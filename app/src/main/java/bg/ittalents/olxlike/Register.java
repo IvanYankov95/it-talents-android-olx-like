@@ -3,11 +3,18 @@ package bg.ittalents.olxlike;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import model.UserAcc;
+import model.UserManager;
 
 public class Register extends AppCompatActivity {
+
+    private UserManager userManager;
 
     private static Button register;
 
@@ -17,6 +24,7 @@ public class Register extends AppCompatActivity {
     private static EditText email;
     private static EditText firstName;
     private static EditText lastName;
+    private static EditText city;
     private static EditText address;
     private static EditText phone;
 
@@ -26,6 +34,8 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        userManager = UserManager.getInstance(this);
+
         register = (Button) findViewById(R.id.registerButton);
 
         username        = (EditText) findViewById(R.id.usernameField);
@@ -34,19 +44,43 @@ public class Register extends AppCompatActivity {
         email           = (EditText) findViewById(R.id.emailField);
         firstName       = (EditText) findViewById(R.id.firstNameField);
         lastName        = (EditText) findViewById(R.id.lastNameField);
+        city         = (EditText) findViewById(R.id.cityField);
         address         = (EditText) findViewById(R.id.addressField);
         phone           = (EditText) findViewById(R.id.phoneField);
+
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean usernameCheck = true;
-                boolean emailCheck = true;
+                String usernameTxt = username.getText().toString();
+                String passwordTxt = password.getText().toString();
+                String emailTxt = email.getText().toString();
+                String firstNameTxt = firstName.getText().toString();
+                String lastNameTxt = lastName.getText().toString();
+                String cityTxt = city.getText().toString();
+                String addressTxt = address.getText().toString();
+                String phoneTxt = phone.getText().toString();
+
+                boolean usernameCheck = false;
+                boolean emailCheck = false;
                 boolean passwordCheck = false;
                 boolean passwordMatch = false;
 
                 //TODO check if username already exists in database!
+                if(userManager.existUsername(usernameTxt)){
+                    username.setError("Username already exists");
+                }
+                else{
+                    usernameCheck = true;
+                }
                 //TODO check if email already exists in database!
+                if(userManager.existEmail(emailTxt)){
+                    email.setError("Email already exists");
+                }
+                else{
+                    emailCheck = true;
+                }
 
                 if(password.getText().toString().isEmpty()) {
                    password.setError("This field is required.");
@@ -64,6 +98,10 @@ public class Register extends AppCompatActivity {
 
                 if(usernameCheck && emailCheck && passwordCheck && passwordMatch){
                     //TODO register in database and log in
+                    UserAcc user = new UserAcc(emailTxt, passwordTxt, usernameTxt, firstNameTxt, lastNameTxt, phoneTxt, cityTxt, addressTxt);
+                    long id = userManager.register(user);
+                    if(id != -1)
+                        Toast.makeText(getApplicationContext(), "register successful" , Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Register.this, LogIn.class));
                 }
             }

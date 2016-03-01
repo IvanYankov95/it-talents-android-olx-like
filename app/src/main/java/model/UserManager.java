@@ -1,22 +1,20 @@
 package model;
 
-import db.DatabaseHelper;
+import model.dao.DBUserDAO;
+import model.db.DatabaseHelper;
 
-import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
-
-import java.sql.SQLException;
 
 /**
  * Created by owner on 22/02/2016.
  */
 public class UserManager {
     private static UserManager ourInstance;
-    DatabaseHelper helper;
+    DBUserDAO userDAO;
 
     private UserManager(Context context) {
-        this.helper = new DatabaseHelper(context);
+
+        this.userDAO = new DBUserDAO(context);
     }
 
     public static UserManager getInstance( Context context) {
@@ -25,24 +23,23 @@ public class UserManager {
         return ourInstance;
     }
 
-    private boolean existUsername(String username){
-        return helper.checkUsername(username);
+    public boolean existUsername(String username){
+
+        return userDAO.checkUsername(username);
     }
 
-    private boolean existEmail(String email){
-        return helper.checkUserEmail(email);
+    public boolean existEmail(String email){
+
+        return userDAO.checkUserEmail(email);
     }
 
 
 
-    public void register(UserAcc user){
-        if(!existUsername(user.getUserName()) && !existEmail(user.getEmail().toString())){
-            helper.createUser(user);
-        }
-        else{
-            // friendly message
-        }
-
+    public long register(UserAcc user){
+        long id = userDAO.addUser(user);
+        if(id != -1)
+            user.setUserId(id);
+        return id;
     }
 
     public void login(String username, String password){

@@ -17,14 +17,14 @@
         android:id="@+id/registerIntroText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35sp"/>
+        android:textSize="20sp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/usernameField"
         android:layout_below="@+id/registerIntroText"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -82,13 +82,24 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addressField"
-        android:hint="@string/addressHint"
+        android:id="@+id/cityField"
+        android:hint="@string/cityHint"
         android:layout_below="@+id/lastNameField"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/lastNameField"
         android:layout_alignEnd="@+id/lastNameField" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addressField"
+        android:hint="@string/addressHint"
+        android:layout_below="@+id/cityField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/cityField"
+        android:layout_alignEnd="@+id/cityField" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -100,7 +111,7 @@
         android:layout_below="@+id/addressField"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="5dp"
         android:layout_alignRight="@+id/lastNameField"
         android:layout_alignEnd="@+id/lastNameField" />
 

@@ -8,6 +8,7 @@
     <string name="confirmPasswordHint">Confirm password</string>
     <string name="firstNameHint">First name</string>
     <string name="lastNameHint">Last name</string>
+    <string name="cityHint">City</string>
     <string name="addressHint">Address</string>
     <string name="phoneHint">Phone</string>
     <string name="registerButton">Register</string>
