@@ -2,6 +2,7 @@ package model;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,18 +20,20 @@ public class Offer implements Comparable<Offer> {
         NEW, USED
     }
 
+    private long id;
     private String name;
     private String description;
     private double price;
     private UserAcc seller;
-    private ProductCondition condition;
-    private Category category;
+    private String condition;
+    private String category;
     private String city;
     private boolean isActive;
     private Date creationDate;
     private Date expiryDate;
+    private ArrayList<byte[]> images;
 
-    public Offer(UserAcc seller, String name, String description, double price, ProductCondition productCondition, Category category, String city) throws IllegalArgumentException {
+    public Offer(UserAcc seller, String name, String description, double price, String productCondition, String category, String city, boolean isActive, Date creationDate, ArrayList<byte[]> images) throws IllegalArgumentException {
         if(seller == null)
             throw new IllegalArgumentException();
         this.setPrice(price);
@@ -42,8 +45,10 @@ public class Offer implements Comparable<Offer> {
             Calendar dateExpire = Calendar.getInstance();
             dateExpire.add(Calendar.MONTH, 1);
         this.expiryDate = dateExpire.getTime();
-        this.isActive = true;
+        this.isActive = isActive;
         this.city = city;
+        this.creationDate = creationDate;
+        this.images = images;
     }
 
     public boolean checkIfActive() {
@@ -104,19 +109,19 @@ public class Offer implements Comparable<Offer> {
         this.price = price;
     }
 
-    public ProductCondition getCondition() {
+    public String getCondition() {
         return condition;
     }
 
-    public void setCondition(ProductCondition condition) {
+    public void setCondition(String condition) {
         this.condition = condition;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -146,5 +151,17 @@ public class Offer implements Comparable<Offer> {
 
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public ArrayList<byte[]> getImages() {
+        return images;
     }
 }

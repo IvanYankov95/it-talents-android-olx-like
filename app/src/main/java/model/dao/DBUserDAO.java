@@ -69,6 +69,31 @@ public class DBUserDAO implements IUserDAO {
     }
 
     @Override
+    public UserAcc getUser(long id) {
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + mDb.USERS
+                + "WHERE " + mDb.USER_ID + " = \"" + id + "\"";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        String uname = c.getString(c.getColumnIndex(mDb.USERNAME));
+        String password = c.getString(c.getColumnIndex(mDb.PASSWORD));
+        String email = c.getString(c.getColumnIndex(mDb.EMAIL));
+        String fname = c.getString(c.getColumnIndex(mDb.FIRST_NAME));
+        String lname = c.getString(c.getColumnIndex(mDb.LAST_NAME));
+        String city = c.getString(c.getColumnIndex(mDb.CITY));
+        String address = c.getString(c.getColumnIndex(mDb.ADDRESS));
+        String phone = c.getString(c.getColumnIndex(mDb.TELEPHONE));
+
+        UserAcc user = new UserAcc(uname, password, email, fname, lname, city, address, phone);
+        db.close();
+        return user;
+    }
+
+    @Override
     public List<UserAcc> getAllUsers() {
         ArrayList<UserAcc> users = new ArrayList<UserAcc>();
         String query = "SELECT * FROM " + mDb.USERS;

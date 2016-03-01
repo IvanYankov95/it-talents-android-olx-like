@@ -66,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //IMAGES table columns
     public static final String IMAGE_ID = "image_id";
+    public static final String IS_MAIN = "is_main";
 
     // CREATE statements
 
@@ -117,6 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + IMAGE_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             + OFFER_ID + " INTEGER, "
             + CONTENT + " BLOB NOT NULL, "
+            + IS_ACTIVE + " BOOL NOT NULL, "
             + "FOREIGN KEY ("+ OFFER_ID +") REFERENCES "+ OFFERS +"("+ OFFER_ID+")"
             +") ";
 
