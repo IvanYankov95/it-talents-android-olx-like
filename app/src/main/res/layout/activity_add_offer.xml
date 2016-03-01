@@ -8,6 +8,8 @@
     android:orientation="vertical"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+
+    android:background="#ffffff"
     tools:context="bg.ittalents.olxlike.AddOffer">
 
     <LinearLayout
@@ -20,12 +22,14 @@
             android:layout_height="match_parent"
             android:layout_weight="2">
 
-            <Button
+            <ImageButton
+                android:background="#ffffff"
                 android:id="@+id/add_offer_main_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Add main picture"
-
+                android:scaleType="fitCenter"
+                android:src="@drawable/empty_image"
+                android:adjustViewBounds="true"
                 />
 
         </LinearLayout>
@@ -42,16 +46,31 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/add_offer_picture1"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/empty_image"
+                    android:adjustViewBounds="true"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/add_offer_picture2"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/empty_image"
+                    android:adjustViewBounds="true"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/add_offer_picture3"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/empty_image"
+                    android:adjustViewBounds="true"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -61,16 +80,31 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/add_offer_picture4"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/empty_image"
+                    android:adjustViewBounds="true"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/add_offer_picture5"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/empty_image"
+                    android:adjustViewBounds="true"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:id="@+id/add_offer_picture6"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/empty_image"
+                    android:adjustViewBounds="true"
                     android:layout_weight="1"/>
             </LinearLayout>
 
@@ -99,7 +133,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:id="@+id/add_offer_title_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +151,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/spinner"
+                android:id="@+id/add_offer_category_spinner"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -135,7 +169,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
+                android:id="@+id/add_offer_price_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -157,7 +191,8 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/add_offer_condition_radio">
 
 
                     <RadioButton
@@ -187,7 +222,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="description (max 2000 symbols)" />
+                android:hint="description (max 2000 symbols)"
+                android:id="@+id/add_offer_description_text" />
 
         </LinearLayout>
 
@@ -205,7 +241,8 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:id="@+id/add_offer_city_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -215,6 +252,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/add_offer_add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Add"
