@@ -38,6 +38,8 @@
         android:layout_weight="3">
 
         <Button
+
+            android:id="@+id/edit_mail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -45,6 +47,7 @@
             android:textAlignment="textStart"/>
 
         <Button
+            android:id="@+id/edit_pass"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -52,6 +55,7 @@
             android:textAlignment="textStart"/>
 
         <Button
+            android:id="@+id/edit_personal_info"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
