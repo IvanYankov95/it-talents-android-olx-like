@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public class Offer implements Comparable<Offer> {
 
+
+
     public enum Category {
         CLOTHES, ELECTRONIC, FURNITURE, SPORT, MUSIC, BOOK, ANIMALS, SHOES, COSMETICS, ACCESSORIES
     }

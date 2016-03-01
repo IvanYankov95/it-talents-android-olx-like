@@ -80,6 +80,7 @@
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/edit_email_save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SAVE"

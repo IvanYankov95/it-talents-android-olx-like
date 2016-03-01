@@ -6,13 +6,34 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MyMessages extends AppCompatActivity {
+
+    Button sentMessages;
+    Button receivedMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_messages);
+
+        sentMessages = (Button)findViewById(R.id.my_messages_sent);
+        sentMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        receivedMessages =  (Button) findViewById(R.id.my_messages_received);
+        receivedMessages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
