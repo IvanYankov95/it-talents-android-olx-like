@@ -30,7 +30,7 @@ public class DBUserDAO implements IUserDAO {
 
         ContentValues values = new ContentValues();
         values.put(mDb.USERNAME, user.getUserName());
-        values.put(mDb.EMAIL, user.getPhoneNumber());
+        values.put(mDb.EMAIL, user.getEmail().toString());
         values.put(mDb.PASSWORD, user.getPassword());
         values.put(mDb.FIRST_NAME, user.getFirstName());
         values.put(mDb.LAST_NAME, user.getLastName());
@@ -47,7 +47,7 @@ public class DBUserDAO implements IUserDAO {
     public UserAcc getUser(String username) {
         SQLiteDatabase db = mDb.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + mDb.USERS
-                + "WHERE " + mDb.USERNAME + " = " + username;
+                + "WHERE " + mDb.USERNAME + " = \"" + username + "\"";
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -100,6 +100,8 @@ public class DBUserDAO implements IUserDAO {
         SQLiteDatabase db = mDb.getWritableDatabase();
         db.delete(mDb.USERS, mDb.USERNAME + " = ?",
                 new String[]{user.getUserName()});
+
+        db.close();
     }
 
     @Override
@@ -129,10 +131,15 @@ public class DBUserDAO implements IUserDAO {
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null && c.moveToFirst())
+
+        if (c != null && c.moveToFirst()) {
+            db.close();
             return true;
-        else
+        }
+        else{
+            db.close();
             return false;
+        }
     }
 
     @Override
@@ -143,9 +150,44 @@ public class DBUserDAO implements IUserDAO {
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null && c.moveToFirst())
+        if (c != null && c.moveToFirst()) {
+            db.close();
             return true;
-        else
+        }
+        else{
+            db.close();
             return false;
+        }
+    }
+
+    public UserAcc checkLogin (String email, String password) {
+        SQLiteDatabase db = mDb.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + mDb.USERS
+                + " WHERE " + mDb.EMAIL + " = \"" + email
+                + "\" AND " + mDb.PASSWORD + " = \"" + password + "\"";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+
+        UserAcc user = null;
+
+        if(c.moveToFirst()){
+            long id = c.getLong(c.getColumnIndex(mDb.USER_ID));
+            String uname = c.getString(c.getColumnIndex(mDb.USERNAME));
+            String upassword = c.getString(c.getColumnIndex(mDb.PASSWORD));
+            String uemail = c.getString(c.getColumnIndex(mDb.EMAIL));
+            String fname = c.getString(c.getColumnIndex(mDb.FIRST_NAME));
+            String lname = c.getString(c.getColumnIndex(mDb.LAST_NAME));
+            String city = c.getString(c.getColumnIndex(mDb.CITY));
+            String address = c.getString(c.getColumnIndex(mDb.ADDRESS));
+            String phone = c.getString(c.getColumnIndex(mDb.TELEPHONE));
+
+            user = new UserAcc(uemail, upassword, uname, fname, lname, phone, city, address);
+            user.setUserId(id);
+        }
+
+        db.close();
+        return user;
     }
 }

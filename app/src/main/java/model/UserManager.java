@@ -42,8 +42,9 @@ public class UserManager {
         return id;
     }
 
-    public void login(String username, String password){
+    public UserAcc login(String email, String password){
 
+        return userDAO.checkLogin(email, password);
     }
 
 
