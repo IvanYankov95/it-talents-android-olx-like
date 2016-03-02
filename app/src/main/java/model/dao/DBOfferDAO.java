@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -73,6 +74,7 @@ public class DBOfferDAO implements IOfferDAO {
         String selectQuery = "SELECT " + mDb.NAME + " FROM " + mDb.CATEGORIES
                 + " WHERE " + mDb.CATEGORY_ID + " = " + id;
         Cursor c = db.rawQuery(selectQuery, null);
+        c.moveToFirst();
         return c.getString(c.getColumnIndex(mDb.NAME));
     }
 
@@ -80,9 +82,11 @@ public class DBOfferDAO implements IOfferDAO {
     @Override
     public long getCategory(String name) {
         SQLiteDatabase db = mDb.getReadableDatabase();
-        String selectQuery = "SELECT " + mDb.NAME + " FROM " + mDb.CATEGORIES
+        Log.d("Didi", name);
+        String selectQuery = "SELECT " + mDb.CATEGORY_ID + " FROM " + mDb.CATEGORIES
                 + " WHERE " + mDb.NAME + " = \"" + name + "\"";
         Cursor c = db.rawQuery(selectQuery, null);
+        c.moveToFirst();
         return c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
     }
 
@@ -118,10 +122,11 @@ public class DBOfferDAO implements IOfferDAO {
             String category = getCategory(catId);
             ArrayList<byte[]> images = getImages(id);
 
-            offer = new Offer(user, title, description, price, condition, category, city, active, creationDate, null);
+            offer = new Offer(user, title, description, price, condition, category, city, active, null);
 
         }
 
+        db.close();
         return offer;
     }
 
@@ -159,5 +164,25 @@ public class DBOfferDAO implements IOfferDAO {
     @Override
     public long updateOffer(Offer offer) {
         return 0;
+    }
+
+    @Override
+    public ArrayList<String> getAllCategories() {
+
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + mDb.CATEGORIES;
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        ArrayList<String> categories = new ArrayList<String>();
+        categories.add(0, "Select category");
+
+        if(c.moveToFirst()) {
+            do {
+                String name = c.getString(c.getColumnIndex(mDb.NAME));
+                categories.add(name);
+            } while (c.moveToNext());
+        }
+        db.close();
+        return categories;
     }
 }

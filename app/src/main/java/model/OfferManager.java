@@ -2,6 +2,9 @@ package model;
 
 import android.content.Context;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import model.dao.DBOfferDAO;
 import model.dao.DBUserDAO;
 
@@ -25,5 +28,9 @@ public class OfferManager {
 
     public long addOffer(Offer offer, long userId, String category){
         return offerDAO.addOffer(offer, userId, category);
+    }
+
+    public ArrayList<String> getAllCategories(){
+        return offerDAO.getAllCategories();
     }
 }

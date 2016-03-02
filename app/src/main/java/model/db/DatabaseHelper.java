@@ -61,12 +61,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public  static final String RECEIVER_ID = "receiver_id";
     public  static final String SENDER_ID = "sender_id";
 
-    // CATEGORIES table columns
-    public static final String NAME = "name";
-
     //IMAGES table columns
     public static final String IMAGE_ID = "image_id";
     public static final String IS_MAIN = "is_main";
+
+    // CATEGORIES table columns
+    public static final String NAME = "name";
+
+    //Categories
+    private static final String CLOTHES = "Clothes";
+    private static final String ELECTRONIC = "Electronic";
+    private static final String FURNITURE = "Furniture";
+    private static final String SPORT = "Sport";
+    private static final String MUSIC = "Music";
+    private static final String BOOKS = "Books";
+    private static final String ANIMALS = "Animals";
+    private static final String SHOES = "Shoes";
+    private static final String COSMETICS = "Cosmetics";
+    private static final String ACCESSORIES = "Accessories";
+    private static final String AUTO = "Auto";
 
     // CREATE statements
 
@@ -122,6 +135,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "FOREIGN KEY ("+ OFFER_ID +") REFERENCES "+ OFFERS +"("+ OFFER_ID+")"
             +") ";
 
+    //INSERT queries
+    private static final String INSERT_CLOTHES = "INSERT INTO " + CATEGORIES +"  VALUES ( \"" + CLOTHES + "\" ) ";
+    private static final String INSERT_ELECTRONIC = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + ELECTRONIC + "\")";
+    private static final String INSERT_FURNITURE = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + FURNITURE + "\")";
+    private static final String INSERT_SPORT = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + SPORT + "\")";
+    private static final String INSERT_MUSIC = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + MUSIC + "\")";
+    private static final String INSERT_BOOKS = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + BOOKS + "\")";
+    private static final String INSERT_ANIMALS = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + ANIMALS + "\")";
+    private static final String INSERT_SHOES = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + SHOES + "\")";
+    private static final String INSERT_COSMETICS = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + COSMETICS + "\")";
+    private static final String INSERT_ACCESSORIES = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + ACCESSORIES + "\")";
+    private static final String INSERT_AUTO = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + AUTO + ")";
+
 
 
 
@@ -139,14 +165,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+
         // creating required tables
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_OFFERS_TABLE);
         db.execSQL(CREATE_CATEGORIES_TABLE);
         db.execSQL(CREATE_MESSAGES_TABLE);
         db.execSQL(CREATE_IMAGES_TABLE);
+//        db.execSQL(INSERT_CLOTHES);
+         // addCategories();
+//        db.rawQuery(INSERT_CLOTHES, null);
+//        db.execSQL(INSERT_ELECTRONIC);
+//        db.execSQL(INSERT_FURNITURE);
+//        db.execSQL(INSERT_SPORT);
+//        db.execSQL(INSERT_MUSIC);
+//        db.execSQL(INSERT_BOOKS);
+//        db.execSQL(INSERT_ANIMALS);
+//        db.execSQL(INSERT_SHOES);
+//        db.execSQL(INSERT_COSMETICS);
+//        db.execSQL(INSERT_ACCESSORIES);
+//        ContentValues val = new ContentValues();
+//        val.put(NAME, AUTO);
+//        db.insert(CATEGORIES, null, val);
+        ArrayList<String> cat = new ArrayList<String>();
+        cat.add("Clothes");
+        cat.add("Electronic");
+        cat.add("Furniture");
+        cat.add("Sport");
+        cat.add("Music");
+        cat.add("Books");
+        cat.add("Animals");
+        cat.add("Cosmetics");
+        cat.add("Accessories");
+        cat.add("Shoes");
+        cat.add("Auto");
+
+        for(String c : cat){
+            ContentValues vals = new ContentValues();
+            vals.put(NAME, c);
+            db.insert(CATEGORIES, null, vals);
+        }
+
 
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -163,43 +226,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-//    // create user
-//    public long createUser(UserAcc user){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//        values.put(USERNAME, user.getUserName());
-//        values.put(EMAIL, user.getPhoneNumber());
-//        values.put(PASSWORD, user.getPassword());
-//        values.put(FIRST_NAME, user.getFirstName());
-//        values.put(LAST_NAME, user.getLastName());
-//        values.put(CITY, user.getCity());
-//        values.put(ADDRESS, user.getAddress());
-//        values.put(TELEPHONE, user.getPhoneNumber());
-//
-//        long userId = db.insert(USERS, null, values);
-//        db.close();
-//        return userId;
-//    }
-
-    //OFFERS
-
-    public long createOffer(Offer offer, int userId, int categoryId){
+    public void addCategories(){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(USER_ID, userId);
-        values.put(CATEGORY_ID, categoryId);
-        values.put(TITLE, offer.getName());
-        values.put(PRICE, offer.getPrice());
-        values.put(CONDITION, String.valueOf(offer.getCondition()));
-        values.put(DESCRIPTION, offer.getDescription());
-        values.put(CITY, offer.getCity());
-        values.put(IS_ACTIVE, String.valueOf(offer.isActive()));
-        values.put(DATE, String.valueOf(offer.getCreationDate()));
+        ArrayList<String> cat = new ArrayList<String>();
+        cat.add("Clothes");
+        cat.add("Electronic");
+        cat.add("Furniture");
+        cat.add("Sport");
+        cat.add("Music");
+        cat.add("Books");
+        cat.add("Animals");
+        cat.add("Cosmetics");
+        cat.add("Accessories");
+        cat.add("Shoes");
+        cat.add("Auto");
 
-        long id = db.insert(OFFERS, null, values);
+        for(String c : cat){
+            ContentValues vals = new ContentValues();
+            vals.put(NAME, c);
+            db.insert(CATEGORIES, null, vals);
+        }
+
         db.close();
-        return id;
+
     }
 
     // Messages CRUD
@@ -256,113 +305,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
 
     }
-
-//    //read single user by username
-//    public UserAcc selectUser(String username){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String selectQuery = "SELECT * FROM " + USERS
-//                + "WHERE " + USERNAME + " = " + username;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//
-//        if (c != null)
-//            c.moveToFirst();
-//
-//        String uname = c.getString(c.getColumnIndex(USERNAME));
-//        String password = c.getString(c.getColumnIndex(PASSWORD));
-//        String email = c.getString(c.getColumnIndex(EMAIL));
-//        String fname = c.getString(c.getColumnIndex(FIRST_NAME));
-//        String lname = c.getString(c.getColumnIndex(LAST_NAME));
-//        String city = c.getString(c.getColumnIndex(CITY));
-//        String address = c.getString(c.getColumnIndex(ADDRESS));
-//        String phone = c.getString(c.getColumnIndex(TELEPHONE));
-//
-//        UserAcc user = new UserAcc(uname, password, email, fname, lname, city, address, phone);
-//        db.close();
-//        return user;
-//    }
-//
-//    // get all users
-//    public ArrayList<UserAcc> getAllUsers(){
-//        ArrayList<UserAcc> users = new ArrayList<UserAcc>();
-//        String query = "SELECT * FROM " + USERS;
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor c = db.rawQuery(query, null);
-//
-//        if(c.moveToFirst()){
-//            do{
-//                String uname = c.getString(c.getColumnIndex(USERNAME));
-//                String password = c.getString(c.getColumnIndex(PASSWORD));
-//                String email = c.getString(c.getColumnIndex(EMAIL));
-//                String fname = c.getString(c.getColumnIndex(FIRST_NAME));
-//                String lname = c.getString(c.getColumnIndex(LAST_NAME));
-//                String city = c.getString(c.getColumnIndex(CITY));
-//                String address = c.getString(c.getColumnIndex(ADDRESS));
-//                String phone = c.getString(c.getColumnIndex(TELEPHONE));
-//
-//                UserAcc user = new UserAcc(uname, password, email, fname, lname, city, address, phone);
-//                users.add(user);
-//            } while(c.moveToNext());
-//        }
-//        db.close();
-//        return users;
-//    }
-//
-//    //update user
-//    public long updateUsr(UserAcc user){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        ContentValues values = new ContentValues();
-//        values.put(USERNAME, user.getUserName());
-//        values.put(EMAIL, user.getPhoneNumber());
-//        values.put(PASSWORD, user.getPassword());
-//        values.put(FIRST_NAME, user.getFirstName());
-//        values.put(LAST_NAME, user.getLastName());
-//        values.put(CITY, user.getCity());
-//        values.put(ADDRESS, user.getAddress());
-//        values.put(TELEPHONE, user.getPhoneNumber());
-//
-//        long userId = db.update(USERS, values, USERNAME + " = ? ", new String[]{user.getUserName()});
-//        db.close();
-//        return userId;
-//    }
-//
-//
-//    //deleting user
-//
-//    public void deleteUser(UserAcc user){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(USERS, USERNAME + " = ?",
-//                new String[]{user.getUserName()});
-//    }
-
-
-//    public boolean checkUsername(String username){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String selectQuery = "SELECT * FROM " + USERS
-//                + "WHERE " + USERNAME + " = " + username;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//
-//        if (c != null)
-//            return true;
-//        else
-//            return false;
-//    }
-
-//    public boolean checkUserEmail(String email){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String selectQuery = "SELECT * FROM " + USERS
-//                + "WHERE " + EMAIL + " = " + email;
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//
-//        if (c != null)
-//            return true;
-//        else
-//            return false;
-//    }
 
 
 

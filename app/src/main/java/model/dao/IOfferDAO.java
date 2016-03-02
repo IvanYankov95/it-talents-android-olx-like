@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Offer;
@@ -17,5 +18,6 @@ public interface IOfferDAO {
     String getCategory(long id);
     long getCategory(String name);
     List<byte[]> getImages(long offerId);
+    ArrayList<String> getAllCategories();
 
 }

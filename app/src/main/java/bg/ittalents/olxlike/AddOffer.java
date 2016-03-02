@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -27,8 +28,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import model.Offer;
+import model.OfferManager;
 
 public class AddOffer extends AppCompatActivity implements View.OnClickListener {
 
@@ -60,10 +67,14 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
     private static EditText city;
     private static Button addOfferButton;
 
+    OfferManager offerManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_offer);
+
+        offerManager = OfferManager.getInstance(this);
 
         pictures = new ArrayList<byte[]>();
 
@@ -82,16 +93,7 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
         city = (EditText) findViewById(R.id.add_offer_city_text);
         addOfferButton = (Button) findViewById(R.id.add_offer_add_button);
 
-        List<String> categories = new ArrayList<String>();
-        categories.add("Select category");
-        categories.add("Automobile");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
-
-
+        List<String> categories = offerManager.getAllCategories();
 
         mainPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,21 +160,25 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
                 else
                     categoryCheck = true;
 
-                int priceInt;
+                double priceDouble;
                 if(!price.getText().toString().isEmpty())
-                    priceInt = Integer.parseInt(price.getText().toString());
+                    priceDouble = Double.parseDouble(price.getText().toString());
                 else
-                    priceInt = -1;
+                    priceDouble = -1;
 
                 if(price.getText().toString().isEmpty())
                     price.setError("Price is required.");
-                else if(priceInt <=0)
+                else if(priceDouble <=0)
                     price.setError("Please enter valid price.");
                 else
                     priceCheck = true;
 
-                if(condition.getCheckedRadioButtonId() != -1)
+                String conditionString = "";
+                if(condition.getCheckedRadioButtonId() != -1) {
                     conditionCheck = true;
+                    RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
+                    conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+                }
                 else
                     Toast.makeText(AddOffer.this, "Condition is required.", Toast.LENGTH_SHORT).show();
 
@@ -193,6 +199,10 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
                     cityCheck = true;
 
                 if(mainPictureCheck && titleCheck && categoryCheck && priceCheck && conditionCheck && descriptionCheck && cityCheck){
+
+                    Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures);
+                    offerManager.addOffer(offer, 1, selectedCategory);
+
                     Toast.makeText(AddOffer.this, "Done", Toast.LENGTH_SHORT).show();
                 }
             }
