@@ -11,14 +11,14 @@ import android.widget.Button;
 
 public class Home extends AppCompatActivity {
 
-    Button searchButton;
+    private static Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        searchButton = (Button) findViewById(R.id.search_button_search);
+        searchButton = (Button) findViewById(R.id.home_button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
