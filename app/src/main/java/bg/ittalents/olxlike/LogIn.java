@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import model.UserAcc;
 import model.UserManager;
+import model.UserSessionManager;
 import model.dao.DBUserDAO;
 
 public class LogIn extends AppCompatActivity {
@@ -21,13 +23,17 @@ public class LogIn extends AppCompatActivity {
     private static EditText email;
     private static EditText password;
 
+    UserSessionManager session;
+    UserManager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        session = new UserSessionManager(getApplicationContext());
+        manager = UserManager.getInstance(LogIn.this);
 
         signIn = (Button) findViewById(R.id.signInButton);
-
         email = (EditText) findViewById(R.id.emailField);
         password = (EditText) findViewById(R.id.passwordField);
 
@@ -44,11 +50,13 @@ public class LogIn extends AppCompatActivity {
                     password.setError("This field is required.");
                     return;
                 }
-                UserManager manager = UserManager.getInstance(LogIn.this);
-                if(manager.login(emailText, passwordText) == null){
+
+                UserAcc user = manager.login(emailText, passwordText);
+                if(user == null){
                     Toast.makeText(LogIn.this, "Wrong email or password", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(LogIn.this, "Login sucssessfull!", Toast.LENGTH_SHORT).show();
+                    session.createUserLoginSession(user.getUserId(), user.getUserName());
                     startActivity(new Intent(LogIn.this, Home.class));
                 }
             }
@@ -70,7 +78,12 @@ public class LogIn extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_offer:
-                startActivity(new Intent(LogIn.this, AddOffer.class));
+                if(session.isUserLoggedIn()){
+                    startActivity(new Intent(LogIn.this, AddOffer.class));
+                }
+                else{
+                    startActivity(new Intent(LogIn.this, LogIn.class));
+                }
                 break;
             case R.id.action_home:
                 startActivity(new Intent(LogIn.this, Home.class));

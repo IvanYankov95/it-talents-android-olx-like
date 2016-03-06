@@ -32,10 +32,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import model.Offer;
 import model.OfferManager;
+import model.UserSessionManager;
 
 public class AddOffer extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,13 +69,17 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
     private static EditText city;
     private static Button addOfferButton;
 
+    UserSessionManager session;
     OfferManager offerManager;
+    HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_offer);
 
+        session = new UserSessionManager(this);
+        user = session.getUserDetails();
         offerManager = OfferManager.getInstance(this);
 
         pictures = new ArrayList<byte[]>();
@@ -198,10 +204,12 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
                 else
                     cityCheck = true;
 
+                // add offer
                 if(mainPictureCheck && titleCheck && categoryCheck && priceCheck && conditionCheck && descriptionCheck && cityCheck){
 
+                    long userId = Long.parseLong(user.get(session.KEY_ID));
                     Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures);
-                    offerManager.addOffer(offer, 1, selectedCategory);
+                    offerManager.addOffer(offer, userId, selectedCategory);
 
                     Toast.makeText(AddOffer.this, "Done", Toast.LENGTH_SHORT).show();
                 }
