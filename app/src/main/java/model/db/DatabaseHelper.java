@@ -131,23 +131,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + IMAGE_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
             + OFFER_ID + " INTEGER, "
             + CONTENT + " BLOB NOT NULL, "
-            + IS_ACTIVE + " BOOL NOT NULL, "
+            + IS_MAIN + " BOOL NOT NULL, "
             + "FOREIGN KEY ("+ OFFER_ID +") REFERENCES "+ OFFERS +"("+ OFFER_ID+")"
             +") ";
-
-    //INSERT queries
-    private static final String INSERT_CLOTHES = "INSERT INTO " + CATEGORIES +"  VALUES ( \"" + CLOTHES + "\" ) ";
-    private static final String INSERT_ELECTRONIC = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + ELECTRONIC + "\")";
-    private static final String INSERT_FURNITURE = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + FURNITURE + "\")";
-    private static final String INSERT_SPORT = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + SPORT + "\")";
-    private static final String INSERT_MUSIC = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + MUSIC + "\")";
-    private static final String INSERT_BOOKS = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + BOOKS + "\")";
-    private static final String INSERT_ANIMALS = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + ANIMALS + "\")";
-    private static final String INSERT_SHOES = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + SHOES + "\")";
-    private static final String INSERT_COSMETICS = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + COSMETICS + "\")";
-    private static final String INSERT_ACCESSORIES = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + ACCESSORIES + "\")";
-    private static final String INSERT_AUTO = "INSERT INTO " + CATEGORIES + "(" + NAME + ") VALUES (\"" + AUTO + ")";
-
 
 
 
@@ -172,21 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_CATEGORIES_TABLE);
         db.execSQL(CREATE_MESSAGES_TABLE);
         db.execSQL(CREATE_IMAGES_TABLE);
-//        db.execSQL(INSERT_CLOTHES);
-         // addCategories();
-//        db.rawQuery(INSERT_CLOTHES, null);
-//        db.execSQL(INSERT_ELECTRONIC);
-//        db.execSQL(INSERT_FURNITURE);
-//        db.execSQL(INSERT_SPORT);
-//        db.execSQL(INSERT_MUSIC);
-//        db.execSQL(INSERT_BOOKS);
-//        db.execSQL(INSERT_ANIMALS);
-//        db.execSQL(INSERT_SHOES);
-//        db.execSQL(INSERT_COSMETICS);
-//        db.execSQL(INSERT_ACCESSORIES);
-//        ContentValues val = new ContentValues();
-//        val.put(NAME, AUTO);
-//        db.insert(CATEGORIES, null, val);
+
         ArrayList<String> cat = new ArrayList<String>();
         cat.add("Clothes");
         cat.add("Electronic");
