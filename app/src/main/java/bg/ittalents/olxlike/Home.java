@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class Home extends AppCompatActivity {
 
     private static Button searchButton;
     private TextView helloMsg;
+    private EditText textToSearch;
     private UserSessionManager session;
 
     @Override
@@ -36,11 +38,15 @@ public class Home extends AppCompatActivity {
         else{
             helloMsg.setText("Hello, guest");
         }
+        textToSearch = (EditText) findViewById(R.id.home_text_to_search);
         searchButton = (Button) findViewById(R.id.home_button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String word = textToSearch.getText().toString();
+                Intent intent = new Intent(Home.this, SearchResult.class);
+                intent.putExtra("wordToSearch", word);
+                startActivity(intent);
             }
         });
     }
