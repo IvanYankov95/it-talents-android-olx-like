@@ -9,7 +9,7 @@ import java.util.TreeSet;
 public class UserAcc {
 
     private long userId;
-    CharSequence email;//this field is required
+    String email;//this field is required
     private String password;//this field is required
 
     private String userName;//this field is required
@@ -70,17 +70,17 @@ public class UserAcc {
         //TODO delete from database
     }
 
-    public CharSequence getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail (CharSequence email) throws IllegalArgumentException{
-        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            //TODO check in databese for existing email.
+    public void setEmail (String email) throws IllegalArgumentException{
+//        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+//            //TODO check in databese for existing email.
             this.email = email;
-        } else {
-            throw new IllegalArgumentException();
-        }
+//        } else {
+//            throw new IllegalArgumentException();
+//        }
     }
 
     public String getPassword() {

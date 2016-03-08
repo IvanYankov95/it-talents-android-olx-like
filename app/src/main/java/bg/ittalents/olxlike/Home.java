@@ -66,7 +66,12 @@ public class Home extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_offer:
-                startActivity(new Intent(Home.this, AddOffer.class));
+                if(session.isUserLoggedIn()) {
+                    startActivity(new Intent(Home.this, AddOffer.class));
+                }
+                else{
+                    startActivity(new Intent(Home.this, LogIn.class));
+                }
                 break;
             case R.id.action_home:
                 startActivity(new Intent(Home.this, Home.class));

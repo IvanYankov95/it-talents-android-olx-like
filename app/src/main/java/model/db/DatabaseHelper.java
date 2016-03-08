@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + CONDITION + " VARCHAR(255) NOT NULL, "
             + CITY + " VARCHAR(255) NOT NULL, "
             + DESCRIPTION + " VARCHAR(2000) NOT NULL, "
-            + DATE + " DATETIME NOT NULL, "
+            + DATE + " DATE NOT NULL, "
             + IS_ACTIVE + " BOOL NOT NULL, "
             + "FOREIGN KEY ("+ USER_ID +") REFERENCES "+ USERS +"("+ USER_ID+")"
             + "FOREIGN KEY ("+ CATEGORY_ID +") REFERENCES "+ CATEGORIES +"("+ CATEGORY_ID +")"

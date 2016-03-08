@@ -58,7 +58,7 @@ public class DBOfferDAO implements IOfferDAO {
             else
                 vals.put(mDb.IS_MAIN, true);
 
-            db.insert(mDb.IMAGES, null, values);
+            db.insert(mDb.IMAGES, null, vals);
         }
 
         db.close();
@@ -123,7 +123,7 @@ public class DBOfferDAO implements IOfferDAO {
             String category = getCategory(catId);
             ArrayList<byte[]> images = getImages(id);
 
-            offer = new Offer(user, title, description, price, condition, category, city, active, images);
+            offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
 
         }
 
@@ -211,7 +211,7 @@ public class DBOfferDAO implements IOfferDAO {
                 boolean active = Boolean.parseBoolean(c.getString(c.getColumnIndex(mDb.IS_ACTIVE)));
                 String date = c.getString(c.getColumnIndex(mDb.DATE));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/YYYY");
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date creationDate = new Date();
                 try {
                     creationDate = sdf.parse(date);
@@ -223,7 +223,7 @@ public class DBOfferDAO implements IOfferDAO {
                 String category = getCategory(catId);
                 ArrayList<byte[]> images = getImages(offerId);
 
-                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images);
+                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
                 offer.setId(offerId);
                 offers.add(offer);
             }
