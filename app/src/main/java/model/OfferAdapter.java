@@ -33,11 +33,13 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         ImageView imView = (ImageView) convertView.findViewById(R.id.viewImageOffer);
         TextView tvTitle = (TextView) convertView.findViewById(R.id.titleViewOffer);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.priceViewOffer);
+        TextView tvIDOffer = (TextView) convertView.findViewById(R.id.idOffer);
         // Populate the data into the template view using the data object
 
         //imView.setImageResource(offer.getImages().get(0));
         tvTitle.setText(offer.getName());
         tvPrice.setText(String.valueOf(offer.getPrice()));
+        tvIDOffer.setText(String.valueOf(offer.getId()));
 
         return convertView;
     }

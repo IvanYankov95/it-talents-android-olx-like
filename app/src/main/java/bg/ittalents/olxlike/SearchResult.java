@@ -43,7 +43,10 @@ public class SearchResult extends AppCompatActivity {
         listViewOffers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(SearchResult.this, OfferView.class);
+                //TODO взимане на ид на офертата и да се пуска по интент към OfferView и там да се инициализират полетата.
+                intent.putExtra("idOffer", view.getId());
+                startActivity(intent);
             }
         });
         // ATTENTION: This was auto-generated to implement the App Indexing API.

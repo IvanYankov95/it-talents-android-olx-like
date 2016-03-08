@@ -44,9 +44,14 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String word = textToSearch.getText().toString();
-                Intent intent = new Intent(Home.this, SearchResult.class);
-                intent.putExtra("wordToSearch", word);
-                startActivity(intent);
+                if(word.equals("")) {
+                    textToSearch.setError("Please input key word to search.");
+                }
+                else {
+                    Intent intent = new Intent(Home.this, SearchResult.class);
+                    intent.putExtra("wordToSearch", word);
+                    startActivity(intent);
+                }
             }
         });
     }
