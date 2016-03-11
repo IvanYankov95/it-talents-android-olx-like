@@ -72,7 +72,7 @@ public class DBUserDAO implements IUserDAO {
     public UserAcc getUser(long id) {
         SQLiteDatabase db = mDb.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + mDb.USERS
-                + "WHERE " + mDb.USER_ID + " = \"" + id + "\"";
+                + " WHERE " + mDb.USER_ID + " = \"" + id + "\"";
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -135,7 +135,7 @@ public class DBUserDAO implements IUserDAO {
 
         ContentValues values = new ContentValues();
         values.put(mDb.USERNAME, user.getUserName());
-        values.put(mDb.EMAIL, user.getPhoneNumber());
+        values.put(mDb.EMAIL, user.getEmail().toString());
         values.put(mDb.PASSWORD, user.getPassword());
         values.put(mDb.FIRST_NAME, user.getFirstName());
         values.put(mDb.LAST_NAME, user.getLastName());

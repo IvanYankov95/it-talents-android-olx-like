@@ -7,12 +7,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import model.OfferManager;
+
 public class OfferView extends AppCompatActivity {
+
+    OfferManager manager = OfferManager.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_view);
+
     }
 
     @Override

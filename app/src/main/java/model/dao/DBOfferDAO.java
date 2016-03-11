@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class DBOfferDAO implements IOfferDAO {
             else
                 vals.put(mDb.IS_MAIN, true);
 
-            db.insert(mDb.IMAGES, null, values);
+            db.insert(mDb.IMAGES, null, vals);
         }
 
         db.close();
@@ -90,6 +91,7 @@ public class DBOfferDAO implements IOfferDAO {
         return c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
     }
 
+    // get offer by ID
     @Override
     public Offer getOffer(long id) {
         SQLiteDatabase db = mDb.getReadableDatabase();
@@ -122,7 +124,7 @@ public class DBOfferDAO implements IOfferDAO {
             String category = getCategory(catId);
             ArrayList<byte[]> images = getImages(id);
 
-            offer = new Offer(user, title, description, price, condition, category, city, active, null);
+            offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
 
         }
 
@@ -130,6 +132,8 @@ public class DBOfferDAO implements IOfferDAO {
         return offer;
     }
 
+
+    // get images by offer id
     @Override
     public ArrayList<byte[]> getImages(long offerId) {
         SQLiteDatabase db = mDb.getReadableDatabase();
@@ -184,5 +188,49 @@ public class DBOfferDAO implements IOfferDAO {
         }
         db.close();
         return categories;
+    }
+
+    // get offer by word in title
+    public ArrayList<Offer> getOffers(String word){
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT * FROM " + mDb.OFFERS
+                + " WHERE " + mDb.TITLE + " LIKE \"%" + word + "%\"";
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                long offerId = c.getLong(c.getColumnIndex(mDb.OFFER_ID));
+                long userId = c.getLong(c.getColumnIndex(mDb.USER_ID));
+                long catId = c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
+                String title = c.getString(c.getColumnIndex(mDb.TITLE));
+                double price = c.getDouble(c.getColumnIndex(mDb.PRICE));
+                String condition = c.getString(c.getColumnIndex(mDb.CONDITION));
+                String description = c.getString(c.getColumnIndex(mDb.DESCRIPTION));
+                String city = c.getString(c.getColumnIndex(mDb.CITY));
+                boolean active = Boolean.parseBoolean(c.getString(c.getColumnIndex(mDb.IS_ACTIVE)));
+                String date = c.getString(c.getColumnIndex(mDb.DATE));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date creationDate = new Date();
+                try {
+                    creationDate = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                UserAcc user = userDAO.getUser(userId);
+                String category = getCategory(catId);
+                ArrayList<byte[]> images = getImages(offerId);
+
+                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
+                offer.setId(offerId);
+                offers.add(offer);
+            }
+            while(c.moveToNext());
+        }
+
+        return offers;
     }
 }

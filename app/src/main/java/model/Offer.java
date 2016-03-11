@@ -35,7 +35,7 @@ public class Offer implements Comparable<Offer> {
     private Date expiryDate;
     private ArrayList<byte[]> images;
 
-    public Offer(UserAcc seller, String name, String description, double price, String productCondition, String category, String city, boolean isActive, ArrayList<byte[]> images) throws IllegalArgumentException {
+    public Offer(UserAcc seller, String name, String description, double price, String productCondition, String category, String city, boolean isActive, ArrayList<byte[]> images, Date date) throws IllegalArgumentException {
 //        if(seller == null)
 //            throw new IllegalArgumentException();
         this.setPrice(price);
@@ -49,7 +49,7 @@ public class Offer implements Comparable<Offer> {
         this.expiryDate = dateExpire.getTime();
         this.isActive = isActive;
         this.city = city;
-        //this.creationDate = creationDate;
+        this.creationDate = date;
         this.images = images;
     }
 

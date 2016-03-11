@@ -207,8 +207,10 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
                 // add offer
                 if(mainPictureCheck && titleCheck && categoryCheck && priceCheck && conditionCheck && descriptionCheck && cityCheck){
 
+                    Date date = new Date();
+
                     long userId = Long.parseLong(user.get(session.KEY_ID));
-                    Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures);
+                    Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
                     offerManager.addOffer(offer, userId, selectedCategory);
 
                     Toast.makeText(AddOffer.this, "Done", Toast.LENGTH_SHORT).show();
