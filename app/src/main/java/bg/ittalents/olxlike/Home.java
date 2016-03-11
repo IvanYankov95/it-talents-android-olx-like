@@ -58,30 +58,14 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_offer:
-                startActivity(new Intent(Home.this, AddOffer.class));
-                break;
-            case R.id.action_home:
-                startActivity(new Intent(Home.this, Home.class));
-                break;
-            case R.id.action_messages:
-                startActivity(new Intent(Home.this, MyMessages.class));
-                break;
-            case R.id.action_profile:
-                //TODO да се направи да праща към твоя профил ...
-                startActivity(new Intent(Home.this, ViewUser.class));
-                break;
-            case R.id.action_settings:
-                startActivity(new Intent(Home.this, Settings.class));
-                break;
-            case R.id.action_logout:
-                session.logoutUser();
-                startActivity(new Intent(Home.this, Home.class));
-                break;
-            default:
-                break;
-        }
+        MenuManager manager = new MenuManager();
+
+        Class goingToClass = manager.onItemClick(item, session);
+
+        if(goingToClass == null)
+            session.logoutUser();
+        else
+            startActivity(new Intent(this, goingToClass));
 
         return true;
     }
