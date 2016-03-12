@@ -1,6 +1,8 @@
 package model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +32,14 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.offer_view_layout, parent, false);
         }
 
+        Bitmap bmp = BitmapFactory.decodeByteArray(offer.getImages().get(0), 0, offer.getImages().get(0).length);
         ImageView imView = (ImageView) convertView.findViewById(R.id.viewImageOffer);
         TextView tvTitle = (TextView) convertView.findViewById(R.id.titleViewOffer);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.priceViewOffer);
         TextView tvIDOffer = (TextView) convertView.findViewById(R.id.idOffer);
         // Populate the data into the template view using the data object
 
-        //imView.setImageResource(offer.getImages().get(0));
+        imView.setImageBitmap(bmp);
         tvTitle.setText(offer.getName());
         tvPrice.setText(String.valueOf(offer.getPrice()));
         tvIDOffer.setText(String.valueOf(offer.getId()));

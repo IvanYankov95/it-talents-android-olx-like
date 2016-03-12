@@ -69,7 +69,7 @@ public class Home extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-<<<<<<< HEAD
+
         MenuManager manager = new MenuManager();
 
         Class goingToClass = manager.onItemClick(item, session);
@@ -78,7 +78,7 @@ public class Home extends AppCompatActivity {
             session.logoutUser();
         else
             startActivity(new Intent(this, goingToClass));
-=======
+
         switch (item.getItemId()) {
             case R.id.action_add_offer:
                 if(session.isUserLoggedIn()) {
@@ -108,7 +108,7 @@ public class Home extends AppCompatActivity {
             default:
                 break;
         }
->>>>>>> origin/master
+
 
         return true;
     }
