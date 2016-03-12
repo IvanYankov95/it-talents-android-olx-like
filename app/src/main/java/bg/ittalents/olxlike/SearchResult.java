@@ -44,8 +44,7 @@ public class SearchResult extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SearchResult.this, OfferView.class);
-                //TODO взимане на ид на офертата и да се пуска по интент към OfferView и там да се инициализират полетата.
-                intent.putExtra("idOffer", view.getId());
+                intent.putExtra("idOffer", id);
                 startActivity(intent);
             }
         });

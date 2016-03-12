@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import model.Offer;
 import model.OfferManager;
 
 public class OfferView extends AppCompatActivity {
+
+    TextView text;
 
     OfferManager manager = OfferManager.getInstance(this);
 
@@ -17,6 +21,13 @@ public class OfferView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_view);
+        Bundle bundle = getIntent().getExtras();
+        long id = bundle.getLong("idOffer");
+        Offer offer = manager.getOfferByID(id);
+
+        text = (TextView) findViewById(R.id.offer_view_description_text);
+        text.setText(offer.getDescription());
+
 
     }
 
