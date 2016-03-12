@@ -13,8 +13,8 @@ import model.UserSessionManager;
 
 public class MyMessages extends CustomActivityWithMenu {
 
-    Button sentMessages;
-    Button receivedMessages;
+    private static Button sentMessages;
+    private static Button receivedMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

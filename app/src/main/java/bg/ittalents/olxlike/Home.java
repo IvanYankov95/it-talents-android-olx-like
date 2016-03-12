@@ -18,8 +18,8 @@ import model.UserSessionManager;
 public class Home extends CustomActivityWithMenu {
 
     private static Button searchButton;
-    private TextView helloMsg;
-    private EditText textToSearch;
+    private static TextView helloMsg;
+    private static EditText textToSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

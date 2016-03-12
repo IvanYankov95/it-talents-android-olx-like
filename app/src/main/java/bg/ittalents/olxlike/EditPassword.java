@@ -13,7 +13,8 @@ import model.UserSessionManager;
 
 public class EditPassword extends CustomActivityWithMenu {
 
-    Button editPassword;
+    private static Button editPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

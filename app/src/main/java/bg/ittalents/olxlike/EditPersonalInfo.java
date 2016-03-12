@@ -13,7 +13,7 @@ import model.UserSessionManager;
 
 public class EditPersonalInfo extends CustomActivityWithMenu {
 
-    Button editPersonalInfo;
+    private static Button editPersonalInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

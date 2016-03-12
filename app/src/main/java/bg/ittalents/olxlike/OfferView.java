@@ -11,16 +11,16 @@ import model.OfferManager;
 
 public class OfferView extends CustomActivityWithMenu {
 
-    TextView title;
-    TextView price;
-    TextView addedFrom;
-    TextView address;
-    TextView condition;
-    TextView delivery;
-    TextView description;
-    ImageView mainImage;
+    private static TextView title;
+    private static  TextView price;
+    private static TextView addedFrom;
+    private static  TextView address;
+    private static  TextView condition;
+    private static  TextView delivery;
+    private static  TextView description;
+    private static  ImageView mainImage;
 
-    OfferManager manager = OfferManager.getInstance(this);
+    private OfferManager manager = OfferManager.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,6 @@ public class OfferView extends CustomActivityWithMenu {
 
         description = (TextView) findViewById(R.id.offer_view_description_text);
         description.setText(offer.getDescription());
-
 
     }
 

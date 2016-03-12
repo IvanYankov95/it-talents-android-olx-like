@@ -14,8 +14,8 @@ import model.UserSessionManager;
 
 public class Search extends CustomActivityWithMenu {
 
-    Button searchButton;
-    EditText textToSearch;
+    private static Button searchButton;
+    private static EditText textToSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

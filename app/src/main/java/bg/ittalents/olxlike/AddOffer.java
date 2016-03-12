@@ -69,8 +69,8 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
     private static EditText city;
     private static Button addOfferButton;
 
-    OfferManager offerManager;
-    HashMap<String, String> user;
+    private OfferManager offerManager;
+    private HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +211,8 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
                     Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
                     offerManager.addOffer(offer, userId, selectedCategory);
 
-                    Toast.makeText(AddOffer.this, "Done", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
+                    //TODO да пратим към offer view със създадената оферта
                 }
             }
         });

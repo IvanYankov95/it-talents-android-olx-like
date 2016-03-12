@@ -13,9 +13,9 @@ import model.UserSessionManager;
 
 public class Settings extends CustomActivityWithMenu {
 
-    Button editMail;
-    Button editPersonalInfo;
-    Button editPass;
+    private static Button editMail;
+    private static  Button editPersonalInfo;
+    private static Button editPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

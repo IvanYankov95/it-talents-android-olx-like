@@ -13,7 +13,7 @@ import model.UserSessionManager;
 
 public class SendMessage extends CustomActivityWithMenu {
 
-    Button sendMessage;
+    private static Button sendMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,28 +1,21 @@
 package bg.ittalents.olxlike;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import java.util.ArrayList;
-
 import model.Offer;
 import model.OfferAdapter;
 import model.OfferManager;
-import model.UserSessionManager;
 
 public class SearchResult extends CustomActivityWithMenu {
 
-    OfferManager manager = OfferManager.getInstance(this);
-    ListView listViewOffers;
+    private  OfferManager manager = OfferManager.getInstance(this);
+    private  ListView listViewOffers;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.

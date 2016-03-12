@@ -13,7 +13,7 @@ import model.UserSessionManager;
 
 public class ViewMessage extends CustomActivityWithMenu {
 
-    Button replyMessage;
+    private static Button replyMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

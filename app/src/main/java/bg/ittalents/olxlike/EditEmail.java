@@ -13,7 +13,7 @@ import model.UserSessionManager;
 
 public class EditEmail extends CustomActivityWithMenu {
 
-    Button editEmail;
+    private static Button editEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

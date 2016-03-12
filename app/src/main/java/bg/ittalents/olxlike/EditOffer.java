@@ -13,7 +13,7 @@ import model.UserSessionManager;
 
 public class EditOffer extends CustomActivityWithMenu {
 
-    Button editOffer;
+    private static Button editOffer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
