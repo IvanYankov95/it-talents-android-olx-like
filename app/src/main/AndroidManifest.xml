@@ -31,6 +31,7 @@
         <activity android:name=".ViewMessage" />
         <activity android:name=".Search" />
         <activity android:name=".Category" />
+        <activity android:name=".OfferView" />
         <activity android:name=".SearchResult"></activity>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->

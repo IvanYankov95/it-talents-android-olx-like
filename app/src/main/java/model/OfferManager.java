@@ -37,4 +37,8 @@ public class OfferManager {
     public ArrayList<Offer> getOffersByWord(String word){
         return offerDAO.getOffers(word);
     }
+
+    public Offer getOfferByID(long id) {
+        return offerDAO.getOffer(id);
+    }
 }

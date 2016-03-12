@@ -19,14 +19,16 @@ import bg.ittalents.olxlike.R;
  * Created by Mitakaa on 08-Mar-16.
  */
 public class OfferAdapter extends ArrayAdapter<Offer> {
+
+    Offer offer;
+
     public OfferAdapter(Context context, ArrayList<Offer> offers) {
         super(context, 0, offers);
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Offer offer = getItem(position);
+        offer = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.offer_view_layout, parent, false);
@@ -46,5 +48,10 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         tvIDOffer.setText(String.valueOf(offer.getId()));
 
         return convertView;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return offer.getId();
     }
 }
