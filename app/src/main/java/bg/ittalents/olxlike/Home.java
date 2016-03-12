@@ -20,7 +20,7 @@ public class Home extends CustomActivityWithMenu {
     private static Button searchButton;
     private static TextView helloMsg;
     private static EditText textToSearch;
-
+    //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
