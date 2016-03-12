@@ -98,6 +98,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         addOfferButton = (Button) findViewById(R.id.add_offer_add_button);
 
         List<String> categories = offerManager.getAllCategories();
+        categories.add(0, "Select category");
 
         mainPicture.setOnClickListener(new View.OnClickListener() {
             @Override

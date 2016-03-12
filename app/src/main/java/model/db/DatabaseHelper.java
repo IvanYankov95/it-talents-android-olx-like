@@ -2,12 +2,24 @@ package model.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import bg.ittalents.olxlike.R;
 import model.Message;
 import model.Offer;
 import model.UserAcc;
@@ -18,11 +30,12 @@ import model.UserAcc;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper instance;
+    private Context context;
 
 
     // database name and version
     public static final String DATABASE_NAME = "OLXLIKE_DATABASE";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 4;
 
     // tables
     public static final String USERS = "users";
@@ -67,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // CATEGORIES table columns
     public static final String NAME = "name";
+
 
     //Categories
     private static final String CLOTHES = "Clothes";
@@ -139,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     public static DatabaseHelper getInstance(Context context){
@@ -158,25 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_CATEGORIES_TABLE);
         db.execSQL(CREATE_MESSAGES_TABLE);
         db.execSQL(CREATE_IMAGES_TABLE);
-
-        ArrayList<String> cat = new ArrayList<String>();
-        cat.add("Clothes");
-        cat.add("Electronic");
-        cat.add("Furniture");
-        cat.add("Sport");
-        cat.add("Music");
-        cat.add("Books");
-        cat.add("Animals");
-        cat.add("Cosmetics");
-        cat.add("Accessories");
-        cat.add("Shoes");
-        cat.add("Auto");
-
-        for(String c : cat){
-            ContentValues vals = new ContentValues();
-            vals.put(NAME, c);
-            db.insert(CATEGORIES, null, vals);
-        }
+        addCategories(db);
 
 
     }
@@ -198,20 +195,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addCategories(){
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addCategories(SQLiteDatabase db){
         ArrayList<String> cat = new ArrayList<String>();
-        cat.add("Clothes");
-        cat.add("Electronic");
-        cat.add("Furniture");
-        cat.add("Sport");
-        cat.add("Music");
-        cat.add("Books");
-        cat.add("Animals");
-        cat.add("Cosmetics");
-        cat.add("Accessories");
-        cat.add("Shoes");
-        cat.add("Auto");
+        cat.add(ELECTRONIC);
+        cat.add(FURNITURE);
+        cat.add(CLOTHES);
+        cat.add(SPORT);
+        cat.add(MUSIC);
+        cat.add(BOOKS);
+        cat.add(ANIMALS);
+        cat.add(COSMETICS);
+        cat.add(ACCESSORIES);
+        cat.add(SHOES);
+        cat.add(AUTO);
 
         for(String c : cat){
             ContentValues vals = new ContentValues();
@@ -219,13 +215,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.insert(CATEGORIES, null, vals);
         }
 
-        db.close();
-
     }
+
+//    private byte[] convertImage(int id){
+//        Resources res = context.getResources();
+//        Drawable drawable = ResourcesCompat.getDrawable(res, id, null);
+//        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//        byte[] bitMapData = stream.toByteArray();
+//
+//        return bitMapData;
+//    }
 
     // Messages CRUD
     //Create message
-    public long creaeMessage(UserAcc sender, UserAcc receiver, Message msg){
+    public long createMessage(UserAcc sender, UserAcc receiver, Message msg){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(SENDER_ID, sender.getUserId());
@@ -252,18 +257,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long id = db.insert(IMAGES, null, values);
         return id;
     }
-    // Categories CRUD
-
-    //create category
-    public long addCategory(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(NAME, name);
-
-        long id =  db.insert(CATEGORIES, null, values);
-        db.close();
-        return id;
-    }
 
     public boolean checkCategory(String name){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -277,6 +270,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
 
     }
+
+
 
 
 

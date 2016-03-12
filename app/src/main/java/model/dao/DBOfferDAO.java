@@ -75,20 +75,26 @@ public class DBOfferDAO implements IOfferDAO {
         String selectQuery = "SELECT " + mDb.NAME + " FROM " + mDb.CATEGORIES
                 + " WHERE " + mDb.CATEGORY_ID + " = " + id;
         Cursor c = db.rawQuery(selectQuery, null);
-        c.moveToFirst();
-        return c.getString(c.getColumnIndex(mDb.NAME));
+        String name = "";
+        if(c.moveToFirst()){
+            name = c.getString(c.getColumnIndex(mDb.NAME));
+        }
+        db.close();
+        return name;
     }
 
     // get category by name
     @Override
     public long getCategory(String name) {
         SQLiteDatabase db = mDb.getReadableDatabase();
-        Log.d("Didi", name);
         String selectQuery = "SELECT " + mDb.CATEGORY_ID + " FROM " + mDb.CATEGORIES
                 + " WHERE " + mDb.NAME + " = \"" + name + "\"";
         Cursor c = db.rawQuery(selectQuery, null);
-        c.moveToFirst();
-        return c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
+        long id = 0;
+        if(c.moveToFirst()){
+            id = c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
+        }
+        return id;
     }
 
     // get offer by ID
@@ -156,8 +162,46 @@ public class DBOfferDAO implements IOfferDAO {
     }
 
     @Override
-    public List<Offer> getOffersByCategory(long categoryId) {
-        return null;
+    public ArrayList<Offer> getOffersByCategory(String category) {
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        long catId = getCategory(category);
+        String selectQuery = "SELECT * FROM " + mDb.OFFERS
+                + " WHERE " + mDb.CATEGORY_ID + " = " + catId;
+        Cursor c = db.rawQuery(selectQuery, null);
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        if(c.moveToFirst()){
+            do {
+                long offerId = c.getLong(c.getColumnIndex(mDb.OFFER_ID));
+                long userId = c.getLong(c.getColumnIndex(mDb.USER_ID));
+                String title = c.getString(c.getColumnIndex(mDb.TITLE));
+                double price = c.getDouble(c.getColumnIndex(mDb.PRICE));
+                String condition = c.getString(c.getColumnIndex(mDb.CONDITION));
+                String description = c.getString(c.getColumnIndex(mDb.DESCRIPTION));
+                String city = c.getString(c.getColumnIndex(mDb.CITY));
+                boolean active = Boolean.parseBoolean(c.getString(c.getColumnIndex(mDb.IS_ACTIVE)));
+                String date = c.getString(c.getColumnIndex(mDb.DATE));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date creationDate = new Date();
+                try {
+                    creationDate = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                UserAcc user = userDAO.getUser(userId);
+                ArrayList<byte[]> images = getImages(offerId);
+
+                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
+                offer.setId(offerId);
+                offers.add(offer);
+            }
+            while(c.moveToNext());
+        }
+
+        db.close();
+        return offers;
     }
 
     @Override
@@ -178,7 +222,6 @@ public class DBOfferDAO implements IOfferDAO {
         Cursor c = db.rawQuery(selectQuery, null);
 
         ArrayList<String> categories = new ArrayList<String>();
-        categories.add(0, "Select category");
 
         if(c.moveToFirst()) {
             do {
@@ -231,6 +274,7 @@ public class DBOfferDAO implements IOfferDAO {
             while(c.moveToNext());
         }
 
+        db.close();
         return offers;
     }
 }

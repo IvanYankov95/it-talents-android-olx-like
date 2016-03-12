@@ -41,4 +41,8 @@ public class OfferManager {
     public Offer getOfferByID(long id) {
         return offerDAO.getOffer(id);
     }
+
+    public ArrayList<Offer> getOffersByCategory(String category){
+        return offerDAO.getOffersByCategory(category);
+    }
 }

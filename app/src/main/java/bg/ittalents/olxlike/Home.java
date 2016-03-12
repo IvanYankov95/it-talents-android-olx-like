@@ -7,12 +7,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.OfferManager;
 import model.UserSessionManager;
 
 public class Home extends CustomActivityWithMenu {
@@ -20,6 +24,10 @@ public class Home extends CustomActivityWithMenu {
     private static Button searchButton;
     private static TextView helloMsg;
     private static EditText textToSearch;
+    GridView categoryList;
+    ArrayList<String> categories;
+    OfferManager offerManager;
+
     //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +60,22 @@ public class Home extends CustomActivityWithMenu {
                 }
             }
         });
+
+        offerManager = OfferManager.getInstance(this);
+        categoryList = (GridView) findViewById(R.id.categoryList);
+        categories = offerManager.getAllCategories();
+        CategoryAdapter adapter = new CategoryAdapter(this, categories);
+        categoryList.setAdapter(adapter);
+        categoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Home.this, Category.class);
+                TextView name = (TextView) view.findViewById(R.id.catName);
+                intent.putExtra("category", name.getText().toString());
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void goToLogIn(View view) {

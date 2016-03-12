@@ -12,12 +12,13 @@ public interface IOfferDAO {
 
     long addOffer(Offer offer, long userId, String category);
     Offer getOffer(long id);
-    List<Offer> getOffersByCategory(long categoryId);
+    ArrayList<Offer> getOffersByCategory(String category);
     void deleteOffer(Offer offer);
     long updateOffer(Offer offer);
     String getCategory(long id);
     long getCategory(String name);
     List<byte[]> getImages(long offerId);
     ArrayList<String> getAllCategories();
+    ArrayList<Offer> getOffers(String word);
 
 }
