@@ -15,18 +15,16 @@ import java.util.HashMap;
 
 import model.UserSessionManager;
 
-public class Home extends AppCompatActivity {
+public class Home extends CustomActivityWithMenu {
 
     private static Button searchButton;
     private TextView helloMsg;
     private EditText textToSearch;
-    private UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        session = new UserSessionManager(this);
 
         helloMsg = (TextView) findViewById(R.id.hello);
         if(session.isUserLoggedIn()){
@@ -61,24 +59,17 @@ public class Home extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar, menu);
-        return true;
-    }
+    protected void onStart() {
+        super.onStart();
+        if(session.isUserLoggedIn()){
+            // get user details
+            HashMap<String, String> user = session.getUserDetails();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        MenuManager manager = new MenuManager();
-
-        Class goingToClass = manager.onItemClick(item, session);
-
-        if(goingToClass == null)
-            session.logoutUser();
-        else
-            startActivity(new Intent(this, goingToClass));
-
-        return true;
+            helloMsg.setText("Hello, " + user.get(session.KEY_NAME));
+        }
+        else{
+            helloMsg.setText("Hello, guest");
+        }
     }
 
 }

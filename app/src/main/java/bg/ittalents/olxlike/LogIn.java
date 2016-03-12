@@ -16,14 +16,13 @@ import model.UserManager;
 import model.UserSessionManager;
 import model.dao.DBUserDAO;
 
-public class LogIn extends AppCompatActivity {
+public class LogIn extends CustomActivityWithMenu {
 
     private static Button signIn;
 
     private static EditText email;
     private static EditText password;
 
-    UserSessionManager session;
     UserManager manager;
 
     @Override
@@ -65,47 +64,6 @@ public class LogIn extends AppCompatActivity {
 
     public void goToRegister(View view) {
         startActivity(new Intent(LogIn.this, Register.class));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_offer:
-                if(session.isUserLoggedIn()){
-                    startActivity(new Intent(LogIn.this, AddOffer.class));
-                }
-                else{
-                    startActivity(new Intent(LogIn.this, LogIn.class));
-                }
-                break;
-            case R.id.action_home:
-                startActivity(new Intent(LogIn.this, Home.class));
-                break;
-            case R.id.action_messages:
-                startActivity(new Intent(LogIn.this, MyMessages.class));
-                break;
-            case R.id.action_profile:
-                //TODO да се направи да праща към твоя профил ...
-                startActivity(new Intent(LogIn.this, ViewUser.class));
-                break;
-            case R.id.action_settings:
-                startActivity(new Intent(LogIn.this, Settings.class));
-                break;
-            case R.id.action_logout:
-                //TODO да те логаутва...
-                break;
-            default:
-                break;
-        }
-
-        return true;
     }
 
 }

@@ -8,8 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import model.OfferManager;
+import model.UserSessionManager;
 
-public class OfferView extends AppCompatActivity {
+public class OfferView extends CustomActivityWithMenu {
 
     OfferManager manager = OfferManager.getInstance(this);
 
@@ -17,42 +18,6 @@ public class OfferView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_view);
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_offer:
-                startActivity(new Intent(OfferView.this, AddOffer.class));
-                break;
-            case R.id.action_home:
-                startActivity(new Intent(OfferView.this, Home.class));
-                break;
-            case R.id.action_messages:
-                startActivity(new Intent(OfferView.this, MyMessages.class));
-                break;
-            case R.id.action_profile:
-                //TODO да се направи да праща към твоя профил ...
-                startActivity(new Intent(OfferView.this, ViewUser.class));
-                break;
-            case R.id.action_settings:
-                startActivity(new Intent(OfferView.this, Settings.class));
-                break;
-            case R.id.action_logout:
-                //TODO да те логаутва...
-                break;
-            default:
-                break;
-        }
-
-        return true;
-    }
 }

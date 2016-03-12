@@ -39,7 +39,7 @@ import model.Offer;
 import model.OfferManager;
 import model.UserSessionManager;
 
-public class AddOffer extends AppCompatActivity implements View.OnClickListener {
+public class AddOffer extends CustomActivityWithMenu implements View.OnClickListener {
 
     public static final int IMAGE_GALLERY_REQUEST_1 = 21;
     public static final int IMAGE_GALLERY_REQUEST_2 = 22;
@@ -69,7 +69,6 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
     private static EditText city;
     private static Button addOfferButton;
 
-    UserSessionManager session;
     OfferManager offerManager;
     HashMap<String, String> user;
 
@@ -78,7 +77,6 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_offer);
 
-        session = new UserSessionManager(this);
         user = session.getUserDetails();
         offerManager = OfferManager.getInstance(this);
 
@@ -250,42 +248,6 @@ public class AddOffer extends AppCompatActivity implements View.OnClickListener 
 
             }
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_offer:
-                startActivity(new Intent(AddOffer.this, AddOffer.class));
-                break;
-            case R.id.action_home:
-                startActivity(new Intent(AddOffer.this, Home.class));
-                break;
-            case R.id.action_messages:
-                startActivity(new Intent(AddOffer.this, MyMessages.class));
-                break;
-            case R.id.action_profile:
-                //TODO да се направи да праща към твоя профил ...
-                startActivity(new Intent(AddOffer.this, ViewUser.class));
-                break;
-            case R.id.action_settings:
-                startActivity(new Intent(AddOffer.this, Settings.class));
-                break;
-            case R.id.action_logout:
-                //TODO да те логаутва...
-                break;
-            default:
-                break;
-        }
-
-        return true;
     }
 
     @Override
