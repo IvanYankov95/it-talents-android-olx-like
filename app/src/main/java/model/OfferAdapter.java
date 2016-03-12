@@ -39,6 +39,7 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         TextView tvIDOffer = (TextView) convertView.findViewById(R.id.idOffer);
         // Populate the data into the template view using the data object
 
+
         imView.setImageBitmap(bmp);
         tvTitle.setText(offer.getName());
         tvPrice.setText(String.valueOf(offer.getPrice()));
