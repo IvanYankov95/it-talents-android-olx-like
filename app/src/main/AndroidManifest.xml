@@ -42,5 +42,5 @@
             android:value="@integer/google_play_services_version" />
 
     </application>
-
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 </manifest>
