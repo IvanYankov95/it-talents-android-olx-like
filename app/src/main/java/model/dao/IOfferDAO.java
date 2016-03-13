@@ -20,5 +20,6 @@ public interface IOfferDAO {
     List<byte[]> getImages(long offerId);
     ArrayList<String> getAllCategories();
     ArrayList<Offer> getOffers(String word);
+    ArrayList<Offer> getOffersByUser(long userId);
 
 }

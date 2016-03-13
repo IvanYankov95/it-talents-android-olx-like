@@ -277,4 +277,50 @@ public class DBOfferDAO implements IOfferDAO {
         db.close();
         return offers;
     }
+
+    @Override
+    public ArrayList<Offer> getOffersByUser(long userId) {
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT * FROM " + mDb.OFFERS
+                + " WHERE " + mDb.USER_ID + " = " + userId;
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                long offerId = c.getLong(c.getColumnIndex(mDb.OFFER_ID));
+                long catId = c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
+                String title = c.getString(c.getColumnIndex(mDb.TITLE));
+                double price = c.getDouble(c.getColumnIndex(mDb.PRICE));
+                String condition = c.getString(c.getColumnIndex(mDb.CONDITION));
+                String description = c.getString(c.getColumnIndex(mDb.DESCRIPTION));
+                String city = c.getString(c.getColumnIndex(mDb.CITY));
+                boolean active = Boolean.parseBoolean(c.getString(c.getColumnIndex(mDb.IS_ACTIVE)));
+                String date = c.getString(c.getColumnIndex(mDb.DATE));
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date creationDate = new Date();
+                try {
+                    creationDate = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                UserAcc user = userDAO.getUser(userId);
+                String category = getCategory(catId);
+                ArrayList<byte[]> images = getImages(offerId);
+
+                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
+                offer.setId(offerId);
+                offers.add(offer);
+            }
+            while(c.moveToNext());
+        }
+
+        db.close();
+        return offers;
+    }
+
+
 }

@@ -36,8 +36,7 @@ public class Offer implements Comparable<Offer> {
     private ArrayList<byte[]> images;
 
     public Offer(UserAcc seller, String name, String description, double price, String productCondition, String category, String city, boolean isActive, ArrayList<byte[]> images, Date date) throws IllegalArgumentException {
-//        if(seller == null)
-//            throw new IllegalArgumentException();
+        this.seller = seller;
         this.setPrice(price);
         this.name = name;
         this.setDescription(description);
@@ -165,5 +164,9 @@ public class Offer implements Comparable<Offer> {
 
     public ArrayList<byte[]> getImages() {
         return images;
+    }
+
+    public UserAcc getSeller() {
+        return this.seller;
     }
 }

@@ -74,5 +74,9 @@ public class UserManager {
         return "";
     }
 
+    public UserAcc getUser(long id){
+        return userDAO.getUser(id);
+    }
+
 
 }

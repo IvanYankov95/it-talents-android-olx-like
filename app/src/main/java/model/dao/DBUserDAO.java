@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Offer;
 import model.UserAcc;
 import model.db.DatabaseHelper;
 
@@ -72,7 +73,7 @@ public class DBUserDAO implements IUserDAO {
     public UserAcc getUser(long id) {
         SQLiteDatabase db = mDb.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + mDb.USERS
-                + " WHERE " + mDb.USER_ID + " = \"" + id + "\"";
+                + " WHERE " + mDb.USER_ID + " = " + id;
 
         Cursor c = db.rawQuery(selectQuery, null);
 
@@ -88,7 +89,8 @@ public class DBUserDAO implements IUserDAO {
         String address = c.getString(c.getColumnIndex(mDb.ADDRESS));
         String phone = c.getString(c.getColumnIndex(mDb.TELEPHONE));
 
-        UserAcc user = new UserAcc(uname, password, email, fname, lname, city, address, phone);
+        UserAcc user = new UserAcc(email, password, uname, fname, lname, phone, city, address);
+        user.setUserId(id);
         db.close();
         return user;
     }
@@ -185,6 +187,7 @@ public class DBUserDAO implements IUserDAO {
         }
     }
 
+    @Override
     public UserAcc checkLogin (String email, String password) {
         SQLiteDatabase db = mDb.getReadableDatabase();
 

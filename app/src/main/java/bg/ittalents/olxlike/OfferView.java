@@ -1,13 +1,19 @@
 package bg.ittalents.olxlike;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import model.Offer;
 import model.OfferManager;
+import model.UserAcc;
+import model.UserManager;
 
 public class OfferView extends CustomActivityWithMenu {
 
@@ -21,6 +27,7 @@ public class OfferView extends CustomActivityWithMenu {
     private static  ImageView mainImage;
 
     private OfferManager manager = OfferManager.getInstance(this);
+    private UserManager userManager = UserManager.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +36,7 @@ public class OfferView extends CustomActivityWithMenu {
 
         Bundle bundle = getIntent().getExtras();
         long id = bundle.getLong("idOffer");
-        Offer offer = manager.getOfferByID(id);
+        final Offer offer = manager.getOfferByID(id);
         ArrayList<byte[]> images = offer.getImages();
 
         Bitmap bmp = BitmapFactory.decodeByteArray(images.get(0), 0, images.get(0).length);
@@ -43,7 +50,15 @@ public class OfferView extends CustomActivityWithMenu {
         price.setText(String.valueOf(offer.getPrice()));
 
         addedFrom = (TextView) findViewById(R.id.offer_view_added_from_text);
-
+        addedFrom.setText(offer.getSeller().getUserName());
+        addedFrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OfferView.this, ViewUser.class);
+                intent.putExtra("id", offer.getSeller().getUserId());
+                startActivity(intent);
+            }
+        });
 
         address = (TextView) findViewById(R.id.offer_view_address);
         address.setText(offer.getCity());

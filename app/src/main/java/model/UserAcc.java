@@ -4,6 +4,7 @@ import android.util.Patterns;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -25,14 +26,14 @@ public class UserAcc {
     private String address;//optional?
 
     private TreeSet<Message> messages = new TreeSet<>();
-    private TreeSet<Offer> offers = new TreeSet<>();
+    private ArrayList<Offer> offers = new ArrayList<Offer>();
 
     public UserAcc(String mail, String password, String userName) throws IllegalArgumentException {
         this.setEmail(mail);
         this.setPassword(password);
         this.setUserName(userName);
         this.messages = new TreeSet<>();
-        this.offers = new TreeSet<>();
+        this.offers = new ArrayList<Offer>();
     }
 
     public UserAcc(String mail, String password, String userName, String firstName, String lastName, String phoneNumber, String city, String address) throws IllegalArgumentException {
@@ -43,6 +44,11 @@ public class UserAcc {
         this.setCity(city);
         this.setAddress(address);
 
+    }
+
+    public UserAcc(String mail, String password, String userName, String firstName, String lastName, String phoneNumber, String city, String address, ArrayList<Offer> offers){
+        this(mail, password, userName, firstName, lastName, phoneNumber, city, address);
+        this.offers = offers;
     }
 
 //    public void addOffer(String name, String description, double price, Offer.ProductCondition productCondition, Offer.Category category, String city){
@@ -171,4 +177,7 @@ public class UserAcc {
         return "";
     }
 
+    public ArrayList<Offer> getOffers() {
+        return offers;
+    }
 }

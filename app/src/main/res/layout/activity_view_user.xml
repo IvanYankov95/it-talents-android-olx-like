@@ -14,16 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/usernameField"
+        android:layout_centerInParent="true"
         android:text="Username"
         android:textSize="30dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/username"
-        android:layout_alignParentRight="true"
-        android:textSize="30dp"
-        android:text="text"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:id="@+id/firstName"
-        android:layout_below="@+id/username"
+        android:layout_below="@+id/usernameField"
         android:text="text"
         android:textSize="30dp"
         />
@@ -82,15 +75,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/offers"
+        android:id="@+id/phoneField"
         android:layout_below="@+id/cityField"
         android:textSize="30dp"
-        android:text="Offers"/>
+        android:text="Phone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/phone"
+        android:layout_below="@+id/city"
+        android:text="text"
+        android:textSize="30dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/offers"
+        android:layout_below="@+id/phoneField"
+        android:textSize="30dp"
+        android:text="Offers:"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/offers">
+        android:layout_below="@+id/offers"
+        android:id="@+id/user_offers_list">
 
     </ListView>
 
