@@ -52,6 +52,6 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
 
     @Override
     public long getItemId(int position) {
-        return offer.getId();
+        return getItem(position).getId();
     }
 }
