@@ -28,6 +28,9 @@ public class MenuManager{
             logout.setVisible(false);
         }
 
+        if(c.equals(LogIn.class))
+            addOffer.setVisible(false);
+
         if(c.equals(AddOffer.class))
             addOffer.setVisible(false);
 
@@ -56,7 +59,6 @@ public class MenuManager{
             case R.id.action_messages:
                 return MyMessages.class;
             case R.id.action_profile:
-                //TODO да се направи да праща към твоя профил ...
                 return ViewUser.class;
             case R.id.action_settings:
                 return Settings.class;
