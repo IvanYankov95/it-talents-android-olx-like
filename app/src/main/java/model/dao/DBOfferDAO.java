@@ -255,19 +255,19 @@ public class DBOfferDAO implements IOfferDAO {
                 boolean active = Boolean.parseBoolean(c.getString(c.getColumnIndex(mDb.IS_ACTIVE)));
                 String date = c.getString(c.getColumnIndex(mDb.DATE));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                Date creationDate = new Date();
-                try {
-                    creationDate = sdf.parse(date);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                //Date creationDate = new Date();
+                //try {
+                //    creationDate = sdf.parse(date);
+                //} catch (ParseException e) {
+                //    e.printStackTrace();
+                //}
 
                 UserAcc user = userDAO.getUser(userId);
                 String category = getCategory(catId);
                 ArrayList<byte[]> images = getImages(offerId);
 
-                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, creationDate);
+                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, null);
                 offer.setId(offerId);
                 offers.add(offer);
             }
