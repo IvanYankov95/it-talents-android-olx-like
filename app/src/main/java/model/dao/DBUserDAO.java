@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,6 +152,22 @@ public class DBUserDAO implements IUserDAO {
     }
 
     @Override
+    public long updateUser(long userId, String fname, String lname, String phone, String city, String address) {
+        SQLiteDatabase db = mDb.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(mDb.FIRST_NAME, fname);
+        values.put(mDb.LAST_NAME,lname);
+        values.put(mDb.CITY, city);
+        values.put(mDb.ADDRESS, address);
+        values.put(mDb.TELEPHONE, phone);
+
+        long result = db.update(mDb.USERS, values, mDb.USER_ID + " = ? ", new String[]{String.valueOf(userId)});
+        db.close();
+        return result;
+    }
+
+    @Override
     public boolean checkUsername(String username) {
         SQLiteDatabase db = mDb.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + mDb.USERS
@@ -217,5 +234,36 @@ public class DBUserDAO implements IUserDAO {
 
         db.close();
         return user;
+    }
+
+    public boolean checkPassword(long userID, String password) {
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT " + mDb.PASSWORD +" FROM "+ mDb.USERS +" WHERE "+ mDb.USER_ID +" = " + userID;
+        Cursor c = db.rawQuery(query, null);
+        c.moveToFirst();
+            String pass = c.getString(c.getColumnIndex(mDb.PASSWORD));
+            if (password.equals(pass)) {
+                return true;
+            } else
+                return false;
+
+    }
+
+    public long updateEmail(long userId, String email){
+        SQLiteDatabase db = mDb.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(mDb.EMAIL, email);
+
+        long result = db.update(mDb.USERS, values, mDb.USER_ID + " = ?", new String[]{(String.valueOf(userId))});
+        return result;
+    }
+
+    public long updatePassword(long userId, String password){
+        SQLiteDatabase db = mDb.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(mDb.PASSWORD, password);
+
+        long result = db.update(mDb.USERS, values, mDb.USER_ID + " = ?", new String[]{(String.valueOf(userId))});
+        return result;
     }
 }

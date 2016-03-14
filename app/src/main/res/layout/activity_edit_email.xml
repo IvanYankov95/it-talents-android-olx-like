@@ -45,6 +45,7 @@
             android:textSize="20dp"/>
 
         <EditText
+            android:id="@+id/edit_email_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -65,6 +66,7 @@
             android:textSize="20dp"/>
 
         <EditText
+            android:id="@+id/edit_email_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

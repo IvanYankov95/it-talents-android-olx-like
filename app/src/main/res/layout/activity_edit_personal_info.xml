@@ -32,106 +32,80 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="5">
 
-        android:layout_weight="1">
-
-        TextView
+        <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="First name"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/edit_personal_fname"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="First name"/>
-    </LinearLayout>
+            android:layout_weight="1"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        TextView
+        <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Last name"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/edit_personal_lname"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Last name"/>
+            android:layout_weight="1"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        TextView
+        <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Telephone"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/edit_personal_phone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="phone"
-            android:hint="Telephone"/>
+            android:inputType="phone"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        TextView
+        <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="City"
-            android:textSize="20dp"/>
+            android:textSize="15dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/edit_personal_city"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="City"/>
+            android:layout_weight="1"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        TextView
+        <TextView
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Adress"
-            android:textSize="20dp"/>
+            android:text="Address"
+            android:textSize="15dp"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:id="@+id/edit_personal_address"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Adress"/>
+            android:layout_weight="1"/>
 
-    </LinearLayout>
+
+    </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -143,6 +117,7 @@
             android:id="@+id/edit_personal_info_save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="updateInfo"
             android:text="SAVE"
             android:textSize="20dp"/>
 

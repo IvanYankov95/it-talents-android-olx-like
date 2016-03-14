@@ -15,8 +15,12 @@ public interface IUserDAO {
     List<UserAcc> getAllUsers();
     void deleteUser(UserAcc user);
     long updateUser(UserAcc user);
+    long updateUser(long userId, String fname, String lname, String phone, String city, String address);
     boolean checkUsername(String username);
     boolean checkUserEmail(String email);
+    boolean checkPassword(long userId, String password);
     UserAcc checkLogin (String email, String password);
+    long updateEmail(long userId, String email);
+    long updatePassword(long userId, String password);
 
 }

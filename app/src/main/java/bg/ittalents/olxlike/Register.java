@@ -89,19 +89,18 @@ public class Register extends CustomActivityWithMenu {
                 if(password.getText().toString().isEmpty()) {
                    password.setError("This field is required.");
                 } else {
-                    if (!checkPasswordStrength(password.getText().toString())) {
+                    if (!userManager.checkPasswordStrength(password.getText().toString())) {
                         password.setError("Password is too weak\n At least 8 symbols \n At least 1 lowercase and uppercase \n At least 1 number");
                     } else
                         passwordCheck = true;
 
-                    if (checkPasswordStrength(password.getText().toString()) && !password.getText().toString().equals(confirmPassword.getText().toString())) {
+                    if (userManager.checkPasswordStrength(password.getText().toString()) && !password.getText().toString().equals(confirmPassword.getText().toString())) {
                         confirmPassword.setError("Passwords don't match");
                     } else
                         passwordMatch = true;
                 }
 
                 if(usernameCheck && emailCheck && passwordCheck && passwordMatch){
-                    //TODO register in database and log in
                     UserAcc user = new UserAcc(emailTxt, passwordTxt, usernameTxt, firstNameTxt, lastNameTxt, phoneTxt, cityTxt, addressTxt);
                     long id = userManager.register(user);
                     if(id != -1)
@@ -112,27 +111,6 @@ public class Register extends CustomActivityWithMenu {
         });
     }
 
-    public boolean checkPasswordStrength(String password) {
-        char[] test = password.toCharArray();
 
-        boolean lowercase = false;
-        boolean uppercase = false;
-        boolean number = false;
-
-        if(test.length < 8)
-            return false;
-
-        for (char aTest : test) {
-            if (aTest >= 65 && aTest <= 90)
-                lowercase = true;
-            if (aTest >= 97 && aTest <= 122)
-                uppercase = true;
-            if (aTest >= 48 && aTest <= 57)
-                number = true;
-        }
-
-        return !(!lowercase || !uppercase || !number);
-
-    }
 
 }

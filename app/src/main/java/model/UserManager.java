@@ -37,6 +37,28 @@ public class UserManager {
     }
 
 
+    public boolean checkPasswordStrength(String password) {
+        char[] test = password.toCharArray();
+
+        boolean lowercase = false;
+        boolean uppercase = false;
+        boolean number = false;
+
+        if(test.length < 8)
+            return false;
+
+        for (char aTest : test) {
+            if (aTest >= 65 && aTest <= 90)
+                lowercase = true;
+            if (aTest >= 97 && aTest <= 122)
+                uppercase = true;
+            if (aTest >= 48 && aTest <= 57)
+                number = true;
+        }
+
+        return !(!lowercase || !uppercase || !number);
+
+    }
 
     public long register(UserAcc user){
         long id = userDAO.addUser(user);
@@ -51,7 +73,12 @@ public class UserManager {
         return userDAO.checkLogin(email, password);
     }
 
-    private static final String md5(final String password) {
+    public boolean checkPassword(long userId, String password){
+        password = md5(password);
+        return userDAO.checkPassword(userId, password);
+    }
+
+    private static String md5(String password) {
         try {
 
             MessageDigest digest = java.security.MessageDigest
@@ -78,5 +105,16 @@ public class UserManager {
         return userDAO.getUser(id);
     }
 
+    public long updateEmail(long userId, String email){
+        return userDAO.updateEmail(userId, email);
+    }
 
+    public long updatePassword(long userId, String password){
+        password = md5(password);
+        return userDAO.updatePassword(userId, password);
+    }
+
+    public long updatePersonalInfo(long userId, String fname, String lname, String phone, String city, String address){
+        return userDAO.updateUser(userId, fname, lname, phone, city, address);
+    }
 }

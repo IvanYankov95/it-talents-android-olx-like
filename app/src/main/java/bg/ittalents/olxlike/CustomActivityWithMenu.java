@@ -46,7 +46,7 @@ public class CustomActivityWithMenu extends AppCompatActivity {
         else if (goingToClass == ViewUser.class){
             //TODO да се оправи тук от менюто да праща към твоя профил
             Intent intent = new Intent(this, ViewUser.class);
-            intent.putExtra("id", session.getUserDetails().get(UserSessionManager.KEY_ID));
+            intent.putExtra("id", Long.parseLong(session.getUserDetails().get(UserSessionManager.KEY_ID)));
             startActivity(intent);
         }
         else
