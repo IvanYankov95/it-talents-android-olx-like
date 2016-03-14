@@ -1,5 +1,10 @@
 package bg.ittalents.olxlike;
 
+import android.annotation.TargetApi;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,7 +12,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -213,10 +220,42 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
                     offerManager.addOffer(offer, userId, selectedCategory);
 
                     Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
+                    notifyUserForNewOffer();
                     //TODO да пратим към offer view със създадената оферта
                 }
             }
         });
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void notifyUserForNewOffer() {
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
+        nBuilder.setSmallIcon(R.drawable.olx_small);
+        nBuilder.setContentTitle("nova obqva");
+        nBuilder.setContentText("bai ivan dobavi obqva");
+        nBuilder.setAutoCancel(true);
+
+        Intent resultIntent = new Intent(this, Home.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(Home.class);
+
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        nBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, nBuilder.build());
+
+
+
+
 
     }
 
