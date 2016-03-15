@@ -235,6 +235,13 @@
             android:gravity="center"
             android:layout_weight="1">
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Archive offer"
+                android:id="@+id/edit_offer_archive_checkbox"
+                android:checked="false" />
+
             <Button
                 android:id="@+id/edit_offer_save_button"
                 android:layout_width="wrap_content"

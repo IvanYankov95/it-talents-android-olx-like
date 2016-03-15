@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,10 +23,16 @@ public class EditOffer extends AddOffer {
 
     private OfferManager manager = OfferManager.getInstance(this);
 
+    private static CheckBox archiveBox;
+
+    private static boolean isArchived = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_offer);
+
+        archiveBox = (CheckBox) findViewById(R.id.edit_offer_archive_checkbox);
 
         Bundle bundle = getIntent().getExtras();
         final long id = bundle.getLong("idOffer");
@@ -87,7 +94,9 @@ public class EditOffer extends AddOffer {
                     RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
                     String conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                     long userId = Long.parseLong(user.get(session.KEY_ID));
-                    Offer of = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
+                    if(archiveBox.isChecked())
+                        isArchived = true;
+                    Offer of = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), isArchived, pictures, date);
                     long offerID = offerManager.updateOffer(offer.getId(), of);
 
                     if (offerID != -1) {
