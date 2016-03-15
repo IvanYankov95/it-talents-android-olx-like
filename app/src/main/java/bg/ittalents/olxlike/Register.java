@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import model.UserAcc;
 import model.UserManager;
 import model.UserSessionManager;
@@ -71,20 +74,25 @@ public class Register extends CustomActivityWithMenu {
                 boolean passwordCheck = false;
                 boolean passwordMatch = false;
 
-                //TODO check if username already exists in database!
                 if(userManager.existUsername(usernameTxt)){
                     username.setError("Username already exists");
                 }
-                else{
+                else if(usernameTxt.isEmpty()){
+                        username.setError("This field is required");
+                } else
                     usernameCheck = true;
-                }
-                //TODO check if email already exists in database!
-                if(userManager.existEmail(emailTxt)){
+
+                if (userManager.existEmail(emailTxt)){
                     email.setError("Email already exists");
                 }
-                else{
-                    emailCheck = true;
+                else if(emailTxt.isEmpty()){
+                    email.setError("This field is required");
                 }
+                else if(!isEmailValid(emailTxt)){
+                    email.setError("Please enter a valid email");
+                }
+                else
+                    emailCheck = true;
 
                 if(password.getText().toString().isEmpty()) {
                    password.setError("This field is required.");
@@ -111,6 +119,18 @@ public class Register extends CustomActivityWithMenu {
         });
     }
 
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
 
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
+    }
 
 }
