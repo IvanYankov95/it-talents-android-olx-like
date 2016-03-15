@@ -7,8 +7,10 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -57,6 +59,8 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
     public static final int IMAGE_GALLERY_REQUEST_5 = 25;
     public static final int IMAGE_GALLERY_REQUEST_6 = 26;
     public static final int IMAGE_GALLERY_REQUEST_7 = 27;
+    public static final int REQ_WIDTH = 500;
+    public static final int REQ_HEIGHT = 500;
 
     private static ArrayList<byte[]> pictures;
 
@@ -338,13 +342,13 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         Uri imageUrl = data.getData();
 
         InputStream inputStream = null;
+        InputStream inputStream2 = null;
         ByteArrayOutputStream stream = null;
         try {
             inputStream = getContentResolver().openInputStream(imageUrl);
+            inputStream2 = getContentResolver().openInputStream(imageUrl);
 
-            Bitmap image = BitmapFactory.decodeStream(inputStream);
-
-            Drawable drawable = new BitmapDrawable(getResources(), image);
+            Bitmap image = decodeSampledBitmapFromStream(inputStream,inputStream2, REQ_WIDTH, REQ_HEIGHT);
 
             stream = new ByteArrayOutputStream();
 
@@ -352,7 +356,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
             pictures.add(stream.toByteArray());
 
-            button.setImageDrawable(drawable);
+            button.setImageBitmap(image);
 
         } catch (FileNotFoundException e) {
             Toast.makeText(AddOffer.this, "Unable to open image", Toast.LENGTH_SHORT).show();
@@ -362,9 +366,50 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
                     inputStream.close();
             } catch (Exception e){}
             try {
+                if (inputStream2 != null)
+                    inputStream2.close();
+            } catch (Exception e){}
+            try {
                 if (stream != null)
                     stream.close();
             } catch (Exception e){}
         }
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromStream(InputStream inputStream, InputStream inputStream2,int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(inputStream, null, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(inputStream2, null , options);
     }
 }
