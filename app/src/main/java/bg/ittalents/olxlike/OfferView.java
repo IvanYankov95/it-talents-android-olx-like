@@ -83,7 +83,7 @@ public class OfferView extends CustomActivityWithMenu {
         address.setText(offer.getCity());
 
         condition = (TextView) findViewById(R.id.offer_view_condition_text);
-        condition.setText(offer.getCondition());
+        condition.setText("Condition: " + offer.getCondition());
 
 
 

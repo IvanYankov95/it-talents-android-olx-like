@@ -97,7 +97,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15">
+            android:layout_weight="0.20">
 
 
             <TextView
@@ -105,8 +105,16 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Condition"
+                android:text="Condition: "
                 android:id="@+id/offer_view_condition_text" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Description: "
+                android:id="@+id/description" />
 
 
         </LinearLayout>
