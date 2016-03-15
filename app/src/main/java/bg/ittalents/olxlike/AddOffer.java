@@ -5,23 +5,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,39 +43,39 @@ import model.UserSessionManager;
 
 public class AddOffer extends CustomActivityWithMenu implements View.OnClickListener {
 
-    public static final int IMAGE_GALLERY_REQUEST_1 = 21;
-    public static final int IMAGE_GALLERY_REQUEST_2 = 22;
-    public static final int IMAGE_GALLERY_REQUEST_3 = 23;
-    public static final int IMAGE_GALLERY_REQUEST_4 = 24;
-    public static final int IMAGE_GALLERY_REQUEST_5 = 25;
-    public static final int IMAGE_GALLERY_REQUEST_6 = 26;
-    public static final int IMAGE_GALLERY_REQUEST_7 = 27;
-    public static final int REQ_WIDTH = 500;
-    public static final int REQ_HEIGHT = 500;
+    protected static final int IMAGE_GALLERY_REQUEST_1 = 21;
+    protected static final int IMAGE_GALLERY_REQUEST_2 = 22;
+    protected static final int IMAGE_GALLERY_REQUEST_3 = 23;
+    protected static final int IMAGE_GALLERY_REQUEST_4 = 24;
+    protected static final int IMAGE_GALLERY_REQUEST_5 = 25;
+    protected static final int IMAGE_GALLERY_REQUEST_6 = 26;
+    protected static final int IMAGE_GALLERY_REQUEST_7 = 27;
+    protected static final int REQ_WIDTH = 500;
+    protected static final int REQ_HEIGHT = 500;
 
-    private static ArrayList<byte[]> pictures;
+    protected static ArrayList<byte[]> pictures;
 
-    private static boolean mainPictureCheck = false;
-    
-    private static ImageButton mainPicture;
-    private static ImageButton picture1;
-    private static ImageButton picture2;
-    private static ImageButton picture3;
-    private static ImageButton picture4;
-    private static ImageButton picture5;
-    private static ImageButton picture6;
-    private static EditText title;
-    private static Spinner categorySpinner;
-    private static String selectedCategory;
-    private static EditText price;
-    private static RadioGroup condition;
-    private static EditText description;
-    private static EditText city;
-    private static Button addOfferButton;
+    protected static boolean mainPictureCheck = false;
 
-    private OfferManager offerManager;
-    private UserManager userManager;
-    private HashMap<String, String> user;
+    protected static ImageButton mainPicture;
+    protected static ImageButton picture1;
+    protected static ImageButton picture2;
+    protected static ImageButton picture3;
+    protected static ImageButton picture4;
+    protected static ImageButton picture5;
+    protected static ImageButton picture6;
+    protected static EditText title;
+    protected static Spinner categorySpinner;
+    protected static String selectedCategory;
+    protected static EditText price;
+    protected static RadioGroup condition;
+    protected static EditText description;
+    protected static EditText city;
+    protected static Button addOfferButton;
+
+    protected OfferManager offerManager;
+    protected UserManager userManager;
+    protected HashMap<String, String> user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,86 +147,95 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         addOfferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                boolean titleCheck = false;
-                boolean categoryCheck = false;
-                boolean priceCheck = false;
-                boolean conditionCheck = false;
-                boolean descriptionCheck = false;
-                boolean cityCheck = false;
-
-                if(!mainPictureCheck)
-                    Toast.makeText(AddOffer.this, "Main picture is required.", Toast.LENGTH_SHORT).show();
-                
-                String titleString = title.getText().toString();
-                if(titleString.isEmpty())
-                    title.setError("Title is required");
-                else if(titleString.length() > 255)
-                    title.setError("Title is too long");
-                else
-                    titleCheck = true;
-
-                if(selectedCategory.equalsIgnoreCase("Select category"))
-                    Toast.makeText(AddOffer.this, "Please select category", Toast.LENGTH_SHORT).show();
-                else
-                    categoryCheck = true;
-
-                double priceDouble;
-                if(!price.getText().toString().isEmpty())
-                    priceDouble = Double.parseDouble(price.getText().toString());
-                else
-                    priceDouble = -1;
-
-                if(price.getText().toString().isEmpty())
-                    price.setError("Price is required.");
-                else if(priceDouble <=0)
-                    price.setError("Please enter valid price.");
-                else
-                    priceCheck = true;
-
-                String conditionString = "";
-                if(condition.getCheckedRadioButtonId() != -1) {
-                    conditionCheck = true;
-                    RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
-                    conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-                }
-                else
-                    Toast.makeText(AddOffer.this, "Condition is required.", Toast.LENGTH_SHORT).show();
-
-                String descriptionString = description.getText().toString();
-
-                if(descriptionString.isEmpty())
-                    description.setError("Description is required");
-                else if(descriptionString.length() < 100)
-                    description.setError("Description is too short");
-                else if(descriptionString.length() > 2000)
-                    description.setError("Description is too long");
-                else
-                    descriptionCheck = true;
-
-                if(city.getText().toString().isEmpty())
-                    city.setError("City is required.");
-                else
-                    cityCheck = true;
-
                 // add offer
-                if(mainPictureCheck && titleCheck && categoryCheck && priceCheck && conditionCheck && descriptionCheck && cityCheck){
-
+                if(checkRequirements()){
                     Date date = new Date();
 
+                    RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
+                    String conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                     long userId = Long.parseLong(user.get(session.KEY_ID));
-                    Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
+                    Offer offer = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
                     long offerID = offerManager.addOffer(offer, userId, selectedCategory);
 
                     if (offerID != -1) {
                         Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
                         notifyUserForNewOffer(userId, offerID);
                     }
-                    //TODO да пратим към offer view със създадената оферта
+                    Intent offerViewIntent = new Intent(AddOffer.this, OfferView.class);
+                    offerViewIntent.putExtra("idOffer", offerID);
+                    startActivity(offerViewIntent);
                 }
             }
         });
 
+    }
+
+    protected boolean checkRequirements(){
+        boolean titleCheck = false;
+        boolean categoryCheck = false;
+        boolean priceCheck = false;
+        boolean conditionCheck = false;
+        boolean descriptionCheck = false;
+        boolean cityCheck = false;
+
+        if(!mainPictureCheck)
+            Toast.makeText(AddOffer.this, "Main picture is required.", Toast.LENGTH_SHORT).show();
+
+        String titleString = title.getText().toString();
+        if(titleString.isEmpty())
+            title.setError("Title is required");
+        else if(titleString.length() > 255)
+            title.setError("Title is too long");
+        else
+            titleCheck = true;
+
+        if(selectedCategory.equalsIgnoreCase("Select category"))
+            Toast.makeText(AddOffer.this, "Please select category", Toast.LENGTH_SHORT).show();
+        else
+            categoryCheck = true;
+
+        double priceDouble;
+        if(!price.getText().toString().isEmpty())
+            priceDouble = Double.parseDouble(price.getText().toString());
+        else
+            priceDouble = -1;
+
+        if(price.getText().toString().isEmpty())
+            price.setError("Price is required.");
+        else if(priceDouble <=0)
+            price.setError("Please enter valid price.");
+        else
+            priceCheck = true;
+
+        String conditionString = "";
+        if(condition.getCheckedRadioButtonId() != -1) {
+            conditionCheck = true;
+            RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
+            conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
+        }
+        else
+            Toast.makeText(AddOffer.this, "Condition is required.", Toast.LENGTH_SHORT).show();
+
+        String descriptionString = description.getText().toString();
+
+        if(descriptionString.isEmpty())
+            description.setError("Description is required");
+        else if(descriptionString.length() < 100)
+            description.setError("Description is too short");
+        else if(descriptionString.length() > 2000)
+            description.setError("Description is too long");
+        else
+            descriptionCheck = true;
+
+        if(city.getText().toString().isEmpty())
+            city.setError("City is required.");
+        else
+            cityCheck = true;
+
+        if(mainPictureCheck && titleCheck && categoryCheck && priceCheck && conditionCheck && descriptionCheck && cityCheck)
+            return true;
+        else
+            return false;
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -327,7 +327,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         }
     }
 
-    private void askForPhotoWithIntent(int request){
+    protected void askForPhotoWithIntent(int request){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String pictureDirectoryPath = pictureDirectory.getPath();
@@ -338,7 +338,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         startActivityForResult(photoPickerIntent, request);
     }
 
-    private void setPicture(ImageButton button, Intent data){
+    protected void setPicture(ImageButton button, Intent data){
         Uri imageUrl = data.getData();
 
         InputStream inputStream = null;
@@ -376,7 +376,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         }
     }
 
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    protected static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -398,7 +398,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         return inSampleSize;
     }
 
-    public static Bitmap decodeSampledBitmapFromStream(InputStream inputStream, InputStream inputStream2,int reqWidth, int reqHeight) {
+    protected static Bitmap decodeSampledBitmapFromStream(InputStream inputStream, InputStream inputStream2,int reqWidth, int reqHeight) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
