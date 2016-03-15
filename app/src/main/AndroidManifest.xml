@@ -20,22 +20,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register" />
-        <activity android:name=".LogIn" />
-        <activity android:name=".AddOffer" />
-        <activity android:name=".ViewUser" />
-        <activity android:name=".SendMessage" />
-        <activity android:name=".MyMessages" />
-        <activity android:name=".Settings" />
-        <activity android:name=".EditEmail" />
-        <activity android:name=".EditPassword" />
-        <activity android:name=".EditPersonalInfo" />
-        <activity android:name=".EditOffer" />
-        <activity android:name=".ViewMessage" />
-        <activity android:name=".Search" />
-        <activity android:name=".Category" />
-        <activity android:name=".OfferView" />
-        <activity android:name=".SearchResult" />
+        <activity android:name=".Register"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".LogIn"
+            android:screenOrientation="sensorPortrait" />
+        <activity android:name=".AddOffer"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ViewUser"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".SendMessage"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".MyMessages"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".Settings"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".EditEmail"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".EditPassword"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".EditPersonalInfo"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".EditOffer"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".ViewMessage"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".Search"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".Category"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".OfferView"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".SearchResult"
+            android:screenOrientation="sensorPortrait"/>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
