@@ -1,6 +1,13 @@
 package bg.ittalents.olxlike;
 
+import android.annotation.TargetApi;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,10 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.OfferManager;
+import model.UserAcc;
 import model.UserSessionManager;
 
 public class Home extends CustomActivityWithMenu {
 
+    public static final int THIRTY_SECONDS = 30000;
     private static Button searchButton;
     private static TextView helloMsg;
     private static EditText textToSearch;
@@ -77,7 +86,51 @@ public class Home extends CustomActivityWithMenu {
             }
         });
 
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(THIRTY_SECONDS);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    notifyUserForNewOffer();
+                }
+            }
+        }).start();
+
     }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void notifyUserForNewOffer() {
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
+        nBuilder.setSmallIcon(R.drawable.olx_small);
+        nBuilder.setContentTitle("All Offers");
+        int count = offerManager.getOffersCount();
+        nBuilder.setContentText("There are " + count + " offers now.");
+        nBuilder.setAutoCancel(true);
+
+        Intent resultIntent = new Intent(this, Home.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(Home.class);
+
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        nBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, nBuilder.build());
+
+    }
+
+
 
     public void goToLogIn(View view) {
         startActivity(new Intent(Home.this, LogIn.class));
