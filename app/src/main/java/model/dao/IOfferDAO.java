@@ -21,5 +21,6 @@ public interface IOfferDAO {
     ArrayList<String> getAllCategories();
     ArrayList<Offer> getOffers(String word);
     ArrayList<Offer> getOffersByUser(long userId);
+    int getOffersCount();
 
 }

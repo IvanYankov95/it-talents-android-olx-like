@@ -49,4 +49,8 @@ public class OfferManager {
     public ArrayList<Offer> getOffersByUser(long userId){
         return offerDAO.getOffersByUser(userId);
     }
+
+    public int getOffersCount(){
+        return offerDAO.getOffersCount();
+    }
 }

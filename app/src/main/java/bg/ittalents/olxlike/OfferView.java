@@ -33,6 +33,7 @@ public class OfferView extends CustomActivityWithMenu {
     private static  ImageView mainImage;
 
     private static Button call;
+    private static Button sendMessage;
 
     private OfferManager manager = OfferManager.getInstance(this);
     private UserManager userManager = UserManager.getInstance(this);
