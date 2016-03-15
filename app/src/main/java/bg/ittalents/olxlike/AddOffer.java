@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
@@ -76,6 +77,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
     protected OfferManager offerManager;
     protected UserManager userManager;
     protected HashMap<String, String> user;
+    protected long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,17 +155,14 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
                     RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
                     String conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
-                    long userId = Long.parseLong(user.get(session.KEY_ID));
+                    userId = Long.parseLong(user.get(session.KEY_ID));
+
+
                     Offer offer = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
                     long offerID = offerManager.addOffer(offer, userId, selectedCategory);
 
-                    if (offerID != -1) {
-                        Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
-                        notifyUserForNewOffer(userId, offerID);
-                    }
-                    Intent offerViewIntent = new Intent(AddOffer.this, OfferView.class);
-                    offerViewIntent.putExtra("idOffer", offerID);
-                    startActivity(offerViewIntent);
+                    MyAssTask task = new MyAssTask();
+                    task.execute(offer);
                 }
             }
         });
@@ -411,5 +410,28 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeStream(inputStream2, null , options);
+    }
+
+    private class MyAssTask extends AsyncTask<Offer, Void, Long> {
+
+
+        @Override
+        protected Long doInBackground(Offer... params) {
+
+            Offer offer = params[0];
+            long offerID = offerManager.addOffer(offer, userId, selectedCategory);
+            return offerID;
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            if (aLong != -1) {
+                Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
+                notifyUserForNewOffer(userId, aLong);
+                Intent offerViewIntent = new Intent(AddOffer.this, OfferView.class);
+                offerViewIntent.putExtra("idOffer", aLong);
+                startActivity(offerViewIntent);
+            }
+        }
     }
 }
