@@ -26,37 +26,18 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:weightSum="2">
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:id="@+id/offer_view_main_image"
                     android:src="@drawable/empty_image" />
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:id="@+id/horizontalScrollView"
-                    android:layout_gravity="center_horizontal" >
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="92dp"
-                            android:layout_height="match_parent"
-                            android:id="@+id/imageView"
-                            android:src="@drawable/empty_image" />
-                    </LinearLayout>
-                </HorizontalScrollView>
             </LinearLayout>
 
             <LinearLayout
@@ -85,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Added from"
+                    android:textSize="21dp"
                     android:id="@+id/offer_view_added_from_text" />
 
                 <TextView
@@ -125,13 +107,7 @@
                 android:text="Condition"
                 android:id="@+id/offer_view_condition_text" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Delivery"
-                android:id="@+id/offer_view_delivery_text" />
+
         </LinearLayout>
 
         <ScrollView

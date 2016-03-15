@@ -28,7 +28,6 @@ public class OfferView extends CustomActivityWithMenu {
     private static TextView addedFrom;
     private static  TextView address;
     private static  TextView condition;
-    private static  TextView delivery;
     private static  TextView description;
     private static  ImageView mainImage;
 
@@ -84,7 +83,7 @@ public class OfferView extends CustomActivityWithMenu {
         condition = (TextView) findViewById(R.id.offer_view_condition_text);
         condition.setText(offer.getCondition());
 
-        delivery = (TextView) findViewById(R.id.offer_view_delivery_text);
+
 
         description = (TextView) findViewById(R.id.offer_view_description_text);
         description.setText(offer.getDescription());
