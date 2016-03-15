@@ -46,6 +46,10 @@ public class OfferManager {
         return offerDAO.getOffersByCategory(category);
     }
 
+    public ArrayList<Offer> getAllMyOffers(long userId){
+        return offerDAO.getAllMyOffers(userId);
+    }
+
     public ArrayList<Offer> getOffersByUser(long userId){
         return offerDAO.getOffersByUser(userId);
     }

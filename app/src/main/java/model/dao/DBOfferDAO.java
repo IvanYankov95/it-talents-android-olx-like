@@ -170,7 +170,7 @@ public class DBOfferDAO implements IOfferDAO {
         SQLiteDatabase db = mDb.getReadableDatabase();
         long catId = getCategory(category);
         String selectQuery = "SELECT * FROM " + mDb.OFFERS
-                + " WHERE " + mDb.CATEGORY_ID + " = " + catId;
+                + " WHERE " + mDb.CATEGORY_ID + " = " + catId + " AND " + mDb.IS_ACTIVE + " = \"true\"";
         Cursor c = db.rawQuery(selectQuery, null);
         ArrayList<Offer> offers = new ArrayList<Offer>();
 
@@ -240,7 +240,7 @@ public class DBOfferDAO implements IOfferDAO {
 
         SQLiteDatabase db = mDb.getReadableDatabase();
         String query = "SELECT * FROM " + mDb.OFFERS
-                + " WHERE " + mDb.TITLE + " LIKE \"%" + word + "%\"";
+                + " WHERE " + mDb.TITLE + " LIKE \"%" + word + "%\" AND " + mDb.IS_ACTIVE + " = \"true\"";
         Cursor c = db.rawQuery(query, null);
 
         if(c.moveToFirst()){
@@ -286,7 +286,7 @@ public class DBOfferDAO implements IOfferDAO {
 
         SQLiteDatabase db = mDb.getReadableDatabase();
         String query = "SELECT * FROM " + mDb.OFFERS
-                + " WHERE " + mDb.USER_ID + " = " + userId;
+                + " WHERE " + mDb.USER_ID + " = " + userId + " AND " + mDb.IS_ACTIVE + " = \"true\"";
         Cursor c = db.rawQuery(query, null);
 
         if(c.moveToFirst()){
@@ -308,6 +308,42 @@ public class DBOfferDAO implements IOfferDAO {
 //                } catch (ParseException e) {
 //                    e.printStackTrace();
 //                }
+
+                UserAcc user = userDAO.getUser(userId);
+                String category = getCategory(catId);
+                ArrayList<byte[]> images = getImages(offerId);
+
+                Offer offer = new Offer(user, title, description, price, condition, category, city, active, images, null);
+                offer.setId(offerId);
+                offers.add(offer);
+            }
+            while(c.moveToNext());
+        }
+
+        c.close();
+        db.close();
+        return offers;
+    }
+
+    public ArrayList<Offer> getAllMyOffers(long userId) {
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT * FROM " + mDb.OFFERS
+                + " WHERE " + mDb.USER_ID + " = " + userId;
+        Cursor c = db.rawQuery(query, null);
+
+        if(c.moveToFirst()){
+            do {
+                long offerId = c.getLong(c.getColumnIndex(mDb.OFFER_ID));
+                long catId = c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
+                String title = c.getString(c.getColumnIndex(mDb.TITLE));
+                double price = c.getDouble(c.getColumnIndex(mDb.PRICE));
+                String condition = c.getString(c.getColumnIndex(mDb.CONDITION));
+                String description = c.getString(c.getColumnIndex(mDb.DESCRIPTION));
+                String city = c.getString(c.getColumnIndex(mDb.CITY));
+                boolean active = Boolean.parseBoolean(c.getString(c.getColumnIndex(mDb.IS_ACTIVE)));
+                String date = c.getString(c.getColumnIndex(mDb.DATE));
 
                 UserAcc user = userDAO.getUser(userId);
                 String category = getCategory(catId);

@@ -40,8 +40,11 @@ public class ViewMessage extends CustomActivityWithMenu {
         title = (TextView) findViewById(R.id.view_message_title);
         content = (TextView) findViewById(R.id.view_message_content);
 
-        from.setText(from.getText().toString() + manager.getUser(m.getSenderId()).getUserName());
-        to.setText(to.getText().toString() + manager.getUser(m.getReceiverId()).getUserName());
+        final String recName = manager.getUser(m.getReceiverId()).getUserName();
+        final String senderName =  manager.getUser(m.getSenderId()).getUserName();
+
+        from.setText(from.getText().toString() + senderName);
+        to.setText(to.getText().toString() + recName);
         title.setText(m.getHeading());
         content.setText(m.getText());
 
@@ -50,7 +53,11 @@ public class ViewMessage extends CustomActivityWithMenu {
         replyMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(ViewMessage.this, SendMessage.class);
+                i.putExtra("id", m.getSenderId());
+                i.putExtra("Username", senderName);
+                i.putExtra("Title", "RE: " + m.getHeading());
+                startActivity(i);
             }
         });
     }
