@@ -168,7 +168,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:id="@+id/add_offer_price_text" />
         </LinearLayout>
 
