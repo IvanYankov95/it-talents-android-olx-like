@@ -159,7 +159,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
 
                     Offer offer = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
-                    long offerID = offerManager.addOffer(offer, userId, selectedCategory);
+
 
                     MyAssTask task = new MyAssTask();
                     task.execute(offer);
