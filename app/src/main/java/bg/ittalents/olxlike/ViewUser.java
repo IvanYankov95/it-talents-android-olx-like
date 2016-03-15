@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import bg.ittalents.olxlike.adapters.MyOffersAdapter;
 import model.Offer;
 import bg.ittalents.olxlike.adapters.OfferAdapter;
 import model.OfferManager;
@@ -46,7 +48,8 @@ public class ViewUser extends CustomActivityWithMenu {
         bundle = getIntent().getExtras();
         long id = bundle.getLong("id");
         UserAcc user = userManager.getUser(id);
-        ArrayList<Offer> userOffers = offerManager.getOffersByUser(id);
+        ArrayList<Offer> userActiveOffers = offerManager.getOffersByUser(id);
+        ArrayList<Offer> userAllOffers = offerManager.getAllMyOffers(id);
 
         username.setText(user.getUserName());
         fname.setText(user.getFirstName());
@@ -54,16 +57,32 @@ public class ViewUser extends CustomActivityWithMenu {
         city.setText(user.getCity());
         phone.setText(user.getPhoneNumber());
 
-        OfferAdapter adapter = new OfferAdapter(this, userOffers);
-        offersList.setAdapter(adapter);
-        offersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ViewUser.this, OfferView.class);
-                intent.putExtra("idOffer", id);
-                startActivity(intent);
-            }
-        });
+
+
+        if(String.valueOf(id).equals(session.getUserDetails().get(session.KEY_ID))){
+            MyOffersAdapter adapter = new MyOffersAdapter(this, userAllOffers);
+            offersList.setAdapter(adapter);
+            offersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ViewUser.this, OfferView.class);
+                    intent.putExtra("idOffer", id);
+                    startActivity(intent);
+                }
+            });
+        }
+        else {
+            OfferAdapter adapter = new OfferAdapter(this, userActiveOffers);
+            offersList.setAdapter(adapter);
+            offersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(ViewUser.this, OfferView.class);
+                    intent.putExtra("idOffer", id);
+                    startActivity(intent);
+                }
+            });
+        }
 
     }
 

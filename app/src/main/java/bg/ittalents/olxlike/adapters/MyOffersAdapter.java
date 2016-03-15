@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,14 @@ import bg.ittalents.olxlike.R;
 import model.Offer;
 
 /**
- * Created by Mitakaa on 08-Mar-16.
+ * Created by Mitakaa on 16-Mar-16.
  */
-public class OfferAdapter extends ArrayAdapter<Offer> {
+public class MyOffersAdapter extends ArrayAdapter<Offer> {
 
     Offer offer;
     Context context;
 
-    public OfferAdapter(Context context, ArrayList<Offer> offers) {
+    public MyOffersAdapter(Context context, ArrayList<Offer> offers) {
         super(context, 0, offers);
         this.context = context;
     }
@@ -45,6 +44,7 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         TextView tvTitle = (TextView) convertView.findViewById(R.id.titleViewOffer);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.priceViewOffer);
         TextView tvIDOffer = (TextView) convertView.findViewById(R.id.idOffer);
+        Button editButton = (Button) convertView.findViewById(R.id.editOffer);
         // Populate the data into the template view using the data object
 
 
@@ -52,7 +52,15 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         tvTitle.setText(offer.getName());
         tvPrice.setText(String.valueOf(offer.getPrice()));
         tvIDOffer.setText(String.valueOf(offer.getId()));
-
+        editButton.setVisibility(View.VISIBLE);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditOffer.class);
+                intent.putExtra("idOffer", getItemId(position));
+                context.startActivity(intent);
+            }
+        });
 
         return convertView;
     }
