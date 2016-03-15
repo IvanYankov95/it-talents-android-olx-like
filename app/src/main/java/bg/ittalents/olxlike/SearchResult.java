@@ -9,7 +9,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
 import model.Offer;
-import model.OfferAdapter;
+import bg.ittalents.olxlike.adapters.OfferAdapter;
 import model.OfferManager;
 
 public class SearchResult extends CustomActivityWithMenu {

@@ -1,11 +1,7 @@
 package bg.ittalents.olxlike;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,11 +10,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import model.Offer;
-import model.OfferAdapter;
+import bg.ittalents.olxlike.adapters.OfferAdapter;
 import model.OfferManager;
 import model.UserAcc;
 import model.UserManager;
-import model.UserSessionManager;
 
 public class ViewUser extends CustomActivityWithMenu {
 

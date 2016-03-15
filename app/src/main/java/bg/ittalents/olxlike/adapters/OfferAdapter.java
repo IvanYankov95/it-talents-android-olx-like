@@ -1,4 +1,4 @@
-package model;
+package bg.ittalents.olxlike.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import bg.ittalents.olxlike.R;
+import model.Offer;
 
 /**
  * Created by Mitakaa on 08-Mar-16.

@@ -44,13 +44,22 @@ public class OfferView extends CustomActivityWithMenu {
         setContentView(R.layout.activity_offer_view);
 
         Bundle bundle = getIntent().getExtras();
-        long id = bundle.getLong("idOffer");
+        final long id = bundle.getLong("idOffer");
         offer = manager.getOfferByID(id);
         ArrayList<byte[]> images = offer.getImages();
 
         Bitmap bmp = BitmapFactory.decodeByteArray(images.get(0), 0, images.get(0).length);
         mainImage = (ImageView) findViewById(R.id.offer_view_main_image);
         mainImage.setImageBitmap(bmp);
+        mainImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OfferView.this, ImagesView.class);
+                intent.putExtra("idOffer", id);
+
+                startActivity(intent);
+            }
+        });
 
         title = (TextView) findViewById(R.id.offer_view_title_text);
         title.setText(offer.getName());
