@@ -1,6 +1,7 @@
 package bg.ittalents.olxlike.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -8,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import bg.ittalents.olxlike.EditOffer;
 import bg.ittalents.olxlike.R;
 import model.Offer;
 
@@ -27,7 +30,7 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         super(context, 0, offers);
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         offer = getItem(position);
 
@@ -40,6 +43,7 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         TextView tvTitle = (TextView) convertView.findViewById(R.id.titleViewOffer);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.priceViewOffer);
         TextView tvIDOffer = (TextView) convertView.findViewById(R.id.idOffer);
+        Button editButton = (Button) convertView.findViewById(R.id.editOffer);
         // Populate the data into the template view using the data object
 
 
@@ -47,6 +51,14 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
         tvTitle.setText(offer.getName());
         tvPrice.setText(String.valueOf(offer.getPrice()));
         tvIDOffer.setText(String.valueOf(offer.getId()));
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditOffer.class);
+                intent.putExtra("idOffer", getItemId(position));
+
+            }
+        });
 
         return convertView;
     }
