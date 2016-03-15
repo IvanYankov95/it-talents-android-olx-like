@@ -338,7 +338,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         Uri imageUrl = data.getData();
 
         InputStream inputStream = null;
-
+        ByteArrayOutputStream stream = null;
         try {
             inputStream = getContentResolver().openInputStream(imageUrl);
 
@@ -346,7 +346,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
             Drawable drawable = new BitmapDrawable(getResources(), image);
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            stream = new ByteArrayOutputStream();
 
             image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
@@ -360,9 +360,11 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
             try {
                 if (inputStream != null)
                     inputStream.close();
-            } catch (Exception e){
-
-            }
+            } catch (Exception e){}
+            try {
+                if (stream != null)
+                    stream.close();
+            } catch (Exception e){}
         }
     }
 }
