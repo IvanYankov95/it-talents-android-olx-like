@@ -10,6 +10,7 @@ import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -214,11 +215,6 @@ public class DBOfferDAO implements IOfferDAO {
     }
 
     @Override
-    public long updateOffer(Offer offer) {
-        return 0;
-    }
-
-    @Override
     public ArrayList<String> getAllCategories() {
 
         SQLiteDatabase db = mDb.getReadableDatabase();
@@ -336,6 +332,51 @@ public class DBOfferDAO implements IOfferDAO {
         int count = c.getCount();
         c.close();
         return count;
+    }
+
+    @Override
+    public long updateOffer(long offerId, Offer offer) {
+        SQLiteDatabase db = mDb.getWritableDatabase();
+
+        long categoryId = getCategory(offer.getCategory());
+
+        ContentValues values = new ContentValues();
+        values.put(mDb.CATEGORY_ID, categoryId);
+        values.put(mDb.TITLE, offer.getName());
+        values.put(mDb.PRICE, offer.getPrice());
+        values.put(mDb.CONDITION, String.valueOf(offer.getCondition()));
+        values.put(mDb.DESCRIPTION, offer.getDescription());
+        values.put(mDb.CITY, offer.getCity());
+        values.put(mDb.IS_ACTIVE, String.valueOf(offer.isActive()));
+        values.put(mDb.DATE, String.valueOf(offer.getCreationDate()));
+
+        long id = db.update(mDb.OFFERS, values, mDb.OFFER_ID +" = ? ", new String[]{String.valueOf(offerId)});
+
+        ArrayList<byte[]> newImages = offer.getImages();
+        ArrayList<byte[]> oldImages = getImages(offerId);
+
+        for(int i = 0; i < oldImages.size(); i++){
+            boolean equals = false;
+            for(int j = 0; j < newImages.size(); j++){
+                if(Arrays.equals(oldImages.get(i), newImages.get(j))){
+                    oldImages.remove(i);
+                    newImages.remove(j);
+                    equals = true;
+                }
+                if(equals)
+                    break;
+            }
+        }
+
+        for(int i=0; i<newImages.size(); i++){
+            ContentValues vals = new ContentValues();
+            vals.put(mDb.OFFER_ID, id);
+            vals.put(mDb.CONTENT, newImages.get(i));
+            vals.put(mDb.IS_MAIN, false);
+            db.insert(mDb.IMAGES, null, vals);
+        }
+
+        return id;
     }
 
 

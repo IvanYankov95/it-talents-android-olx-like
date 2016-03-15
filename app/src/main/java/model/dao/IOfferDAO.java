@@ -14,7 +14,7 @@ public interface IOfferDAO {
     Offer getOffer(long id);
     ArrayList<Offer> getOffersByCategory(String category);
     void deleteOffer(Offer offer);
-    long updateOffer(Offer offer);
+    long updateOffer(long offerId, Offer offer);
     String getCategory(long id);
     long getCategory(String name);
     List<byte[]> getImages(long offerId);

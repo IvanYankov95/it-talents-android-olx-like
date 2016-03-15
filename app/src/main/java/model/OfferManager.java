@@ -53,4 +53,8 @@ public class OfferManager {
     public int getOffersCount(){
         return offerDAO.getOffersCount();
     }
+
+    public long updateOffer(long offerId, Offer offer){
+        return offerDAO.updateOffer(offerId, offer);
+    }
 }
