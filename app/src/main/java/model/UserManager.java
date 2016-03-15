@@ -7,6 +7,7 @@ import android.content.Context;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  * Created by owner on 22/02/2016.
@@ -120,5 +121,17 @@ public class UserManager {
 
     public long sendMessage(Message msg){
         return userDAO.sendMessage(msg);
+    }
+
+    public ArrayList<Message> getSentMessages(long userId){
+        return userDAO.getSentMessages(userId);
+    }
+
+    public ArrayList<Message> getReceivedMessages(long userId){
+        return userDAO.getReceivedMessages(userId);
+    }
+
+    public Message getMessage(long id){
+        return userDAO.getMessage(id);
     }
 }

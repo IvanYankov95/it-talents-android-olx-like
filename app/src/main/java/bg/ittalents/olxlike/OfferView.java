@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -92,11 +93,18 @@ public class OfferView extends CustomActivityWithMenu {
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OfferView.this, SendMessage.class);
-                intent.putExtra("id", offer.getSeller().getUserId());
-                intent.putExtra("Username", offer.getSeller().getUserName());
-                intent.putExtra("Title", offer.getName());
-                startActivity(intent);
+                long id = offer.getSeller().getUserId();
+                long myId = Long.parseLong(session.getUserDetails().get(session.KEY_ID));
+                if(id != myId) {
+                    Intent intent = new Intent(OfferView.this, SendMessage.class);
+                    intent.putExtra("id", id);
+                    intent.putExtra("Username", offer.getSeller().getUserName());
+                    intent.putExtra("Title", offer.getName());
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(OfferView.this, "Cannot send message to yourself", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

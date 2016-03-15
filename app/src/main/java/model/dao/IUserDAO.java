@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Message;
@@ -24,5 +25,8 @@ public interface IUserDAO {
     long updateEmail(long userId, String email);
     long updatePassword(long userId, String password);
     long sendMessage(Message msg);
+    ArrayList<Message> getSentMessages(long userId);
+    ArrayList<Message> getReceivedMessages(long userId);
+    Message getMessage(long id);
 
 }

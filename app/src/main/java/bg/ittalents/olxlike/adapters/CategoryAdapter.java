@@ -1,4 +1,4 @@
-package bg.ittalents.olxlike;
+package bg.ittalents.olxlike.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import bg.ittalents.olxlike.R;
 
 /**
  * Created by owner on 12/03/2016.

@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class Message implements Comparable<Message> {
 
+    long id;
     private String heading;
     private String text;
     private Date date;
@@ -21,6 +22,12 @@ public class Message implements Comparable<Message> {
         this.heading = heading;
         this.text = text;
         this.date = new Date();
+    }
+
+    public Message(long id, long senderId, long receiverId, String heading, String text){
+        this(senderId, receiverId, heading, text);
+        this.id = id;
+
     }
 
     @Override
@@ -51,5 +58,13 @@ public class Message implements Comparable<Message> {
 
     public long getReceiverId() {
         return receiverId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

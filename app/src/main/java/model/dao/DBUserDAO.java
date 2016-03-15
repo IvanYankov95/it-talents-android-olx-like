@@ -289,4 +289,75 @@ public class DBUserDAO implements IUserDAO {
         long id = db.insert(mDb.MESSAGES, null, values);
         return id;
     }
+
+    @Override
+    public ArrayList<Message> getSentMessages(long userId){
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT * FROM " + mDb.MESSAGES
+                + " WHERE " + mDb.SENDER_ID + " = " + userId;
+        Cursor c = db.rawQuery(query, null);
+        ArrayList<Message> messages = new ArrayList<Message>();
+
+        if(c.moveToFirst()){
+            do{
+                long messageId = c.getLong(c.getColumnIndex(mDb.MESSAGE_ID));
+                long receiverId = c.getLong(c.getColumnIndex(mDb.RECEIVER_ID));
+                String title = c.getString(c.getColumnIndex(mDb.TITLE));
+                String content = c.getString(c.getColumnIndex(mDb.CONTENT));
+                String date =  c.getString(c.getColumnIndex(mDb.DATE));
+                Message msg = new Message(messageId, userId, receiverId, title, content);
+                messages.add(msg);
+            }
+            while (c.moveToNext());
+        }
+
+        db.close();
+        return messages;
+    }
+
+    @Override
+    public ArrayList<Message> getReceivedMessages(long userId){
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT * FROM " + mDb.MESSAGES
+                + " WHERE " + mDb.RECEIVER_ID + " = " + userId;
+        Cursor c = db.rawQuery(query, null);
+        ArrayList<Message> messages = new ArrayList<Message>();
+
+        if(c.moveToFirst()){
+            do{
+                long messageId = c.getLong(c.getColumnIndex(mDb.MESSAGE_ID));
+                long senderId = c.getLong(c.getColumnIndex(mDb.SENDER_ID));
+                String title = c.getString(c.getColumnIndex(mDb.TITLE));
+                String content = c.getString(c.getColumnIndex(mDb.CONTENT));
+                String date =  c.getString(c.getColumnIndex(mDb.DATE));
+                Message msg = new Message(messageId, senderId, userId, title, content);
+                messages.add(msg);
+            }
+            while (c.moveToNext());
+        }
+
+        db.close();
+        return messages;
+    }
+
+    @Override
+    public Message getMessage(long id){
+        SQLiteDatabase db = mDb.getReadableDatabase();
+        String query = "SELECT * FROM " + mDb.MESSAGES
+                + " WHERE " + mDb.MESSAGE_ID + " = " + id;
+        Message m = null;
+        Cursor c = db.rawQuery(query, null);
+        if(c.moveToFirst()){
+            long senderId = c.getLong(c.getColumnIndex(mDb.SENDER_ID));
+            long receiverId = c.getLong(c.getColumnIndex(mDb.RECEIVER_ID));
+            String title = c.getString(c.getColumnIndex(mDb.TITLE));
+            String content = c.getString(c.getColumnIndex(mDb.CONTENT));
+            String date = c.getString(c.getColumnIndex(mDb.DATE));
+
+            m = new Message(id, senderId, receiverId, title, content);
+        }
+        c.close();
+        db.close();
+        return m;
+    }
 }
