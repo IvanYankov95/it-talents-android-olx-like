@@ -25,9 +25,11 @@ import model.Offer;
 public class OfferAdapter extends ArrayAdapter<Offer> {
 
     Offer offer;
+    Context context;
 
     public OfferAdapter(Context context, ArrayList<Offer> offers) {
         super(context, 0, offers);
+        this.context = context;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -56,7 +58,7 @@ public class OfferAdapter extends ArrayAdapter<Offer> {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EditOffer.class);
                 intent.putExtra("idOffer", getItemId(position));
-
+                context.startActivity(intent);
             }
         });
 
