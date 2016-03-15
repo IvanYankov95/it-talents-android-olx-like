@@ -44,6 +44,8 @@ import java.util.List;
 
 import model.Offer;
 import model.OfferManager;
+import model.UserAcc;
+import model.UserManager;
 import model.UserSessionManager;
 
 public class AddOffer extends CustomActivityWithMenu implements View.OnClickListener {
@@ -77,6 +79,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
     private static Button addOfferButton;
 
     private OfferManager offerManager;
+    private UserManager userManager;
     private HashMap<String, String> user;
 
     @Override
@@ -86,6 +89,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
         user = session.getUserDetails();
         offerManager = OfferManager.getInstance(this);
+        userManager = UserManager.getInstance(this);
 
         pictures = new ArrayList<byte[]>();
 
@@ -217,10 +221,12 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
                     long userId = Long.parseLong(user.get(session.KEY_ID));
                     Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
-                    offerManager.addOffer(offer, userId, selectedCategory);
+                    long offerID = offerManager.addOffer(offer, userId, selectedCategory);
 
-                    Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
-                    notifyUserForNewOffer();
+                    if (offerID != -1) {
+                        Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
+                        notifyUserForNewOffer(userId, offerID);
+                    }
                     //TODO да пратим към offer view със създадената оферта
                 }
             }
@@ -229,17 +235,19 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void notifyUserForNewOffer() {
+    public void notifyUserForNewOffer(long userID, long offerID) {
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this);
         nBuilder.setSmallIcon(R.drawable.olx_small);
-        nBuilder.setContentTitle("nova obqva");
-        nBuilder.setContentText("bai ivan dobavi obqva");
+        nBuilder.setContentTitle("New Offer");
+        UserAcc user = userManager.getUser(userID);
+        String userName = user.getUserName();
+        nBuilder.setContentText(userName + " added new offer.");
         nBuilder.setAutoCancel(true);
 
-        Intent resultIntent = new Intent(this, Home.class);
-
+        Intent resultIntent = new Intent(this, OfferView.class);
+        resultIntent.putExtra("idOffer", offerID);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(Home.class);
+        stackBuilder.addParentStack(OfferView.class);
 
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
