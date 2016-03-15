@@ -80,6 +80,18 @@ public class OfferView extends CustomActivityWithMenu {
         description = (TextView) findViewById(R.id.offer_view_description_text);
         description.setText(offer.getDescription());
 
+        sendMessage = (Button) findViewById(R.id.offer_view_send_message_button);
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OfferView.this, SendMessage.class);
+                intent.putExtra("id", offer.getSeller().getUserId());
+                intent.putExtra("Username", offer.getSeller().getUserName());
+                intent.putExtra("Title", offer.getName());
+                startActivity(intent);
+            }
+        });
+
         call = (Button) findViewById(R.id.offer_view_phone_number_button);
         call.setText("Call " + offer.getSeller().getPhoneNumber());
         call.setOnClickListener(new View.OnClickListener() {

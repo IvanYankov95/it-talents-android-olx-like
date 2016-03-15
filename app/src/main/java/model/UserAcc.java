@@ -65,11 +65,11 @@ public class UserAcc {
         offer.switchIfActive(true);
     }
 
-    public void sendMessage(UserAcc userAcc, String heading, String text){
-        Message message = new Message(heading, text);
-
-        userAcc.receiveMessage(message);
-    }
+//    public void sendMessage(UserAcc userAcc, String heading, String text){
+//        Message message = new Message(heading, text);
+//
+//        userAcc.receiveMessage(message);
+//    }
 
     public void receiveMessage(Message message){
         this.messages.add(message);

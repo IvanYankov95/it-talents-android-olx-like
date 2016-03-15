@@ -79,6 +79,7 @@ public class DBOfferDAO implements IOfferDAO {
         if(c.moveToFirst()){
             name = c.getString(c.getColumnIndex(mDb.NAME));
         }
+        c.close();
         db.close();
         return name;
     }
@@ -94,6 +95,7 @@ public class DBOfferDAO implements IOfferDAO {
         if(c.moveToFirst()){
             id = c.getLong(c.getColumnIndex(mDb.CATEGORY_ID));
         }
+        c.close();
         return id;
     }
 
@@ -133,7 +135,7 @@ public class DBOfferDAO implements IOfferDAO {
             offer = new Offer(user, title, description, price, condition, category, city, active, images, null);
 
         }
-
+        c.close();
         db.close();
         return offer;
     }
@@ -157,6 +159,7 @@ public class DBOfferDAO implements IOfferDAO {
                 images.add(content);
             } while(c.moveToNext());
         }
+        c.close();
         db.close();
         return images;
     }
@@ -200,6 +203,7 @@ public class DBOfferDAO implements IOfferDAO {
             while(c.moveToNext());
         }
 
+        c.close();
         db.close();
         return offers;
     }
@@ -229,6 +233,7 @@ public class DBOfferDAO implements IOfferDAO {
                 categories.add(name);
             } while (c.moveToNext());
         }
+        c.close();
         db.close();
         return categories;
     }
@@ -274,6 +279,7 @@ public class DBOfferDAO implements IOfferDAO {
             while(c.moveToNext());
         }
 
+        c.close();
         db.close();
         return offers;
     }
@@ -318,6 +324,7 @@ public class DBOfferDAO implements IOfferDAO {
             while(c.moveToNext());
         }
 
+        c.close();
         db.close();
         return offers;
     }

@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Message;
 import model.Offer;
 import model.UserAcc;
 import model.db.DatabaseHelper;
@@ -55,7 +56,7 @@ public class DBUserDAO implements IUserDAO {
 
         if (c != null)
             c.moveToFirst();
-
+        long userId = c.getLong(c.getColumnIndex(mDb.USER_ID));
         String uname = c.getString(c.getColumnIndex(mDb.USERNAME));
         String password = c.getString(c.getColumnIndex(mDb.PASSWORD));
         String email = c.getString(c.getColumnIndex(mDb.EMAIL));
@@ -66,6 +67,8 @@ public class DBUserDAO implements IUserDAO {
         String phone = c.getString(c.getColumnIndex(mDb.TELEPHONE));
 
         UserAcc user = new UserAcc(uname, password, email, fname, lname, city, address, phone);
+        user.setUserId(userId);
+        c.close();
         db.close();
         return user;
     }
@@ -92,6 +95,7 @@ public class DBUserDAO implements IUserDAO {
 
         UserAcc user = new UserAcc(email, password, uname, fname, lname, phone, city, address);
         user.setUserId(id);
+        c.close();
         db.close();
         return user;
     }
@@ -119,6 +123,7 @@ public class DBUserDAO implements IUserDAO {
                 users.add(user);
             } while(c.moveToNext());
         }
+        c.close();
         db.close();
         return users;
     }
@@ -178,10 +183,12 @@ public class DBUserDAO implements IUserDAO {
 
         if (c != null && c.moveToFirst()) {
             db.close();
+            c.close();
             return true;
         }
         else{
             db.close();
+            c.close();
             return false;
         }
     }
@@ -232,6 +239,7 @@ public class DBUserDAO implements IUserDAO {
             user.setUserId(id);
         }
 
+        c.close();
         db.close();
         return user;
     }
@@ -242,6 +250,7 @@ public class DBUserDAO implements IUserDAO {
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
             String pass = c.getString(c.getColumnIndex(mDb.PASSWORD));
+        c.close();
             if (password.equals(pass)) {
                 return true;
             } else
@@ -265,5 +274,19 @@ public class DBUserDAO implements IUserDAO {
 
         long result = db.update(mDb.USERS, values, mDb.USER_ID + " = ?", new String[]{(String.valueOf(userId))});
         return result;
+    }
+
+    @Override
+    public long sendMessage(Message msg) {
+        SQLiteDatabase db = mDb.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(mDb.SENDER_ID, msg.getSenderId());
+        values.put(mDb.RECEIVER_ID, msg.getReceiverId());
+        values.put(mDb.TITLE, msg.getHeading());
+        values.put(mDb.CONTENT, msg.getText());
+        values.put(mDb.DATE, String.valueOf(msg.getDate()));
+
+        long id = db.insert(mDb.MESSAGES, null, values);
+        return id;
     }
 }

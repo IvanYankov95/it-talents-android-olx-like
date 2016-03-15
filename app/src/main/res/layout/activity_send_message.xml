@@ -22,9 +22,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:layout_marginRight="10dp"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/send_message_receiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -42,9 +44,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:layout_marginRight="10dp"/>
 
         <EditText
+            android:id="@+id/send_message_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,11 +61,19 @@
         android:layout_height="0dp"
         android:layout_weight="7">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Content"
+            android:textSize="20dp"
+            android:layout_marginRight="10dp"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <EditText
+                android:id="@+id/send_message_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />

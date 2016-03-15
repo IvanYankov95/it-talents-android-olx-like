@@ -11,18 +11,17 @@
     tools:context="bg.ittalents.olxlike.MyMessages">
 
 
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1">-->
+
+    <!--</LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,35 +31,85 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/messages_tab_host"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/my_messages_received"
-            android:layout_width="0dp"
+
+        <LinearLayout
+            android:id="@+id/messages_layout"
+            android:orientation="vertical"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Received"/>
+            android:layout_width="match_parent">
 
-        <Button
-            android:id="@+id/my_messages_sent"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Sent"/>
-    </LinearLayout>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+            </TabWidget>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7">
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/received">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="received messages"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/sent">
+                    <!-- tab 2 content goes here -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="sent messages"/>
+                </LinearLayout>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </FrameLayout>
 
-        </ListView>
-    </LinearLayout>
+        </LinearLayout>
+
+    </TabHost>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/my_messages_received"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Received"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/my_messages_sent"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="Sent"/>-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="7">-->
+
+        <!--<ListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+        <!--</ListView>-->
+    <!--</LinearLayout>-->
 </LinearLayout>

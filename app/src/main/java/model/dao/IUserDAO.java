@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import model.Message;
 import model.UserAcc;
 
 /**
@@ -22,5 +23,6 @@ public interface IUserDAO {
     UserAcc checkLogin (String email, String password);
     long updateEmail(long userId, String email);
     long updatePassword(long userId, String password);
+    long sendMessage(Message msg);
 
 }

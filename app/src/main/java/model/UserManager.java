@@ -117,4 +117,8 @@ public class UserManager {
     public long updatePersonalInfo(long userId, String fname, String lname, String phone, String city, String address){
         return userDAO.updateUser(userId, fname, lname, phone, city, address);
     }
+
+    public long sendMessage(Message msg){
+        return userDAO.sendMessage(msg);
+    }
 }
