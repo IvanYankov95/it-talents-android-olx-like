@@ -5,23 +5,15 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,9 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +38,6 @@ import model.Offer;
 import model.OfferManager;
 import model.UserAcc;
 import model.UserManager;
-import model.UserSessionManager;
 
 public class AddOffer extends CustomActivityWithMenu implements View.OnClickListener {
 
@@ -85,6 +74,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
     private OfferManager offerManager;
     private UserManager userManager;
     private HashMap<String, String> user;
+    private long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,17 +211,10 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
                 // add offer
                 if(mainPictureCheck && titleCheck && categoryCheck && priceCheck && conditionCheck && descriptionCheck && cityCheck){
 
-                    Date date = new Date();
-
-                    long userId = Long.parseLong(user.get(session.KEY_ID));
-                    Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures, date);
-                    long offerID = offerManager.addOffer(offer, userId, selectedCategory);
-
-                    if (offerID != -1) {
-                        Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
-                        notifyUserForNewOffer(userId, offerID);
-                    }
-                    //TODO да пратим към offer view със създадената оферта
+                    userId = Long.parseLong(user.get(session.KEY_ID));
+                    Offer offer = new Offer(null, titleString, descriptionString, priceDouble, conditionString, selectedCategory, city.getText().toString(), true, pictures, null);
+                    MyAssTask task = new MyAssTask();
+                    task.execute(offer);
                 }
             }
         });
@@ -411,5 +394,27 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeStream(inputStream2, null , options);
+    }
+
+    private class MyAssTask extends AsyncTask<Offer, Void, Long> {
+
+
+        @Override
+        protected Long doInBackground(Offer... params) {
+            Date date = new Date();
+
+            long userId = Long.parseLong(user.get(session.KEY_ID));
+            Offer offer = params[0];
+            long offerID = offerManager.addOffer(offer, userId, selectedCategory);
+            return offerID;
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            if (aLong != -1) {
+                Toast.makeText(AddOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
+                notifyUserForNewOffer(userId, aLong);
+            }
+        }
     }
 }
