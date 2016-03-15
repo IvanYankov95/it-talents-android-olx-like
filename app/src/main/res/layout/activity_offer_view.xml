@@ -89,6 +89,7 @@
                     android:text="Phone number"
                     android:id="@+id/offer_view_phone_number_button"
                     android:layout_gravity="center_horizontal" />
+
             </LinearLayout>
         </LinearLayout>
 

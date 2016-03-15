@@ -32,6 +32,7 @@ public class OfferView extends CustomActivityWithMenu {
     private static  TextView description;
     private static  ImageView mainImage;
 
+
     private static Button call;
     private static Button sendMessage;
 
@@ -88,6 +89,7 @@ public class OfferView extends CustomActivityWithMenu {
 
         description = (TextView) findViewById(R.id.offer_view_description_text);
         description.setText(offer.getDescription());
+
 
         sendMessage = (Button) findViewById(R.id.offer_view_send_message_button);
         sendMessage.setOnClickListener(new View.OnClickListener() {
