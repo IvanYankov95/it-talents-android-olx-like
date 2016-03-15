@@ -21,7 +21,7 @@
             android:layout_weight="2">
 
             <ImageButton
-                android:id="@+id/add_offer_main_picture"
+                android:id="@+id/edit_offer_main_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
@@ -46,7 +46,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/add_offer_picture1"
+                    android:id="@+id/edit_offer_picture1"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
@@ -55,7 +55,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/add_offer_picture2"
+                    android:id="@+id/edit_offer_picture2"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
@@ -64,7 +64,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/add_offer_picture3"
+                    android:id="@+id/edit_offer_picture3"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
@@ -80,7 +80,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/add_offer_picture4"
+                    android:id="@+id/edit_offer_picture4"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
@@ -89,7 +89,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/add_offer_picture5"
+                    android:id="@+id/edit_offer_picture5"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
@@ -98,7 +98,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/add_offer_picture6"
+                    android:id="@+id/edit_offer_picture6"
                     android:scaleType="fitCenter"
                     android:src="@drawable/empty_image"
                     android:adjustViewBounds="true"
@@ -127,6 +127,7 @@
                 android:text="Title"/>
 
             <EditText
+                android:id="@+id/edit_offer_title_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
@@ -142,6 +143,12 @@
                 android:layout_height="match_parent"
                 android:text="Category"
                 android:textSize="25dp"/>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/edit_offer_category_spinner"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -155,6 +162,7 @@
                 android:textSize="25dp"/>
 
             <EditText
+                android:id="@+id/edit_offer_price_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
@@ -177,6 +185,7 @@
                 android:layout_height="match_parent">
 
                 <RadioGroup
+                    android:id="@+id/edit_offer_condition_radio"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -186,13 +195,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="New"
-                        android:id="@+id/radioButton2" />
+                        android:id="@+id/edit_offer_radioButton" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Used"
-                        android:id="@+id/radioButton" />
+                        android:id="@+id/edit_offer_radioButton2" />
 
                 </RadioGroup>
 
@@ -207,6 +216,7 @@
             android:layout_weight="2">
 
             <EditText
+                android:id="@+id/edit_offer_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="description"/>
@@ -225,6 +235,7 @@
                 android:textSize="25dp"/>
 
             <EditText
+                android:id="@+id/edit_offer_city_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

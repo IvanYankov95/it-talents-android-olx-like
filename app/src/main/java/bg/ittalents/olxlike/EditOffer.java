@@ -8,13 +8,17 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import model.Offer;
 import model.OfferManager;
@@ -33,6 +37,21 @@ public class EditOffer extends AddOffer {
         setContentView(R.layout.activity_edit_offer);
 
         archiveBox = (CheckBox) findViewById(R.id.edit_offer_archive_checkbox);
+
+        mainPicture = (ImageButton) findViewById(R.id.edit_offer_main_picture);
+        picture1 = (ImageButton) findViewById(R.id.edit_offer_picture1);
+        picture2 = (ImageButton) findViewById(R.id.edit_offer_picture2);
+        picture3 = (ImageButton) findViewById(R.id.edit_offer_picture3);
+        picture4 = (ImageButton) findViewById(R.id.edit_offer_picture4);
+        picture5 = (ImageButton) findViewById(R.id.edit_offer_picture5);
+        picture6 = (ImageButton) findViewById(R.id.edit_offer_picture6);
+        title = (EditText) findViewById(R.id.edit_offer_title_text);
+        categorySpinner = (Spinner) findViewById(R.id.edit_offer_category_spinner);
+        price = (EditText) findViewById(R.id.edit_offer_price_text);
+        condition = (RadioGroup) findViewById(R.id.edit_offer_condition_radio);
+        description = (EditText) findViewById(R.id.edit_offer_description_text);
+        city = (EditText) findViewById(R.id.edit_offer_city_text);
+        addOfferButton = (Button) findViewById(R.id.edit_offer_save_button);
 
         Bundle bundle = getIntent().getExtras();
         final long id = bundle.getLong("idOffer");
@@ -69,6 +88,13 @@ public class EditOffer extends AddOffer {
         }
 
         title.setText(offer.getName());
+
+        List<String> categories = offerManager.getAllCategories();
+        categories.add(0, "Select category");
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(dataAdapter);
 
         categorySpinner.setSelection(((ArrayAdapter) categorySpinner.getAdapter()).getPosition(offer.getCategory()));
 
