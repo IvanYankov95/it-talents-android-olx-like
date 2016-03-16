@@ -403,6 +403,12 @@ public class DBOfferDAO implements IOfferDAO {
             }
         }
 
+//        for(int i=0; i<oldImages.size(); i++){
+//            String query = " DELETE FROM " + mDb.IMAGES
+//                    + " WHERE " + mDb.OFFER_ID + " = " + offerId " AND " +
+//            db.delete(mDb.IMAGES, mDb.OFFER_ID, mDb.CONTENT, vals);
+//        }
+
         for(int i=0; i<newImages.size(); i++){
             ContentValues vals = new ContentValues();
             vals.put(mDb.OFFER_ID, id);

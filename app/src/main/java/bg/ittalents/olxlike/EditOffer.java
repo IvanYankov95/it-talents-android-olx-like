@@ -172,7 +172,7 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
                         notifyUserForNewOffer(userId, offerID);
                     }
                     Intent offerViewIntent = new Intent(EditOffer.this, OfferView.class);
-                    offerViewIntent.putExtra("idOffer", offerID);
+                    offerViewIntent.putExtra("idOffer", offer.getId());
                     startActivity(offerViewIntent);
                 }
             }
