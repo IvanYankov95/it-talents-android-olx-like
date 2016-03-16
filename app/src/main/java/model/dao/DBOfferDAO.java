@@ -26,7 +26,7 @@ public class DBOfferDAO implements IOfferDAO {
     private DatabaseHelper mDb;
     private DBUserDAO userDAO;
 
-    public DBOfferDAO(Context context){
+    public  DBOfferDAO(Context context){
         this.mDb = DatabaseHelper.getInstance(context);
         this.userDAO = new DBUserDAO(context);
     }
@@ -161,7 +161,6 @@ public class DBOfferDAO implements IOfferDAO {
             } while(c.moveToNext());
         }
         c.close();
-        db.close();
         return images;
     }
 
@@ -412,6 +411,7 @@ public class DBOfferDAO implements IOfferDAO {
             db.insert(mDb.IMAGES, null, vals);
         }
 
+        db.close();
         return id;
     }
 
