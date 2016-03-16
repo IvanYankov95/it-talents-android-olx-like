@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,13 +24,15 @@ import java.util.List;
 import model.Offer;
 import model.OfferManager;
 
-public class EditOffer extends AddOffer {
+public class EditOffer extends AddOffer implements View.OnClickListener {
 
     private OfferManager manager = OfferManager.getInstance(this);
 
     private static CheckBox archiveBox;
 
     private static boolean isArchived = false;
+
+    private static String selectedCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,9 @@ public class EditOffer extends AddOffer {
         final long id = bundle.getLong("idOffer");
         final Offer offer = manager.getOfferByID(id);
         ArrayList<byte[]> images = offer.getImages();
+        pictures = images;
 
+        mainPictureCheck = true;
         for (int i = 0; i < images.size(); i++){
             Bitmap bmp = BitmapFactory.decodeByteArray(images.get(i), 0, images.get(0).length);
             switch (i){
@@ -102,22 +107,41 @@ public class EditOffer extends AddOffer {
 
         String cn = offer.getCondition();
         if(cn.equalsIgnoreCase("new"))
-            condition.check(R.id.radioButton);
+            condition.check(R.id.edit_offer_radioButton);
         else
-            condition.check(R.id.radioButton2);
+            condition.check(R.id.edit_offer_radioButton2);
 
         description.setText(offer.getDescription());
 
         city.setText(offer.getCity());
 
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCategory = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        picture1.setOnClickListener(this);
+        picture2.setOnClickListener(this);
+        picture3.setOnClickListener(this);
+        picture4.setOnClickListener(this);
+        picture5.setOnClickListener(this);
+        picture6.setOnClickListener(this);
+
         addOfferButton.setText("Save edit");
         addOfferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkRequirements()){
+                if(checkRequirements(selectedCategory, R.id.edit_offer_condition_radio)){
                     Date date = new Date();
 
-                    RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
+                    RadioGroup rg = (RadioGroup)findViewById(R.id.edit_offer_condition_radio);
                     String conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                     long userId = Long.parseLong(user.get(session.KEY_ID));
                     if(archiveBox.isChecked())
@@ -138,8 +162,63 @@ public class EditOffer extends AddOffer {
     }
 
     @Override
-    protected boolean checkRequirements() {
-        return super.checkRequirements();
+    protected boolean checkRequirements(String selectedCategory, int condition_radio) {
+        return super.checkRequirements(selectedCategory, condition_radio);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.edit_offer_picture1:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_2);
+                break;
+            case R.id.edit_offer_picture2:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_3);
+                break;
+            case R.id.edit_offer_picture3:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_4);
+                break;
+            case R.id.edit_offer_picture4:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_5);
+                break;
+            case R.id.edit_offer_picture5:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_6);
+                break;
+            case R.id.edit_offer_picture6:
+                askForPhotoWithIntent(IMAGE_GALLERY_REQUEST_7);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+
+            switch (requestCode){
+                case IMAGE_GALLERY_REQUEST_1:
+                    setPicture(mainPicture,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_2:
+                    setPicture(picture1,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_3:
+                    setPicture(picture2,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_4:
+                    setPicture(picture3,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_5:
+                    setPicture(picture4,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_6:
+                    setPicture(picture5,data);
+                    break;
+                case IMAGE_GALLERY_REQUEST_7:
+                    setPicture(picture6,data);
+                    break;
+
+            }
+        }
     }
 }
 

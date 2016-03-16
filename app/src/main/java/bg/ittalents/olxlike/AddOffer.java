@@ -150,7 +150,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
             @Override
             public void onClick(View v) {
                 // add offer
-                if(checkRequirements()){
+                if(checkRequirements(selectedCategory, R.id.add_offer_condition_radio)){
                     Date date = new Date();
 
                     RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
@@ -169,7 +169,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
 
     }
 
-    protected boolean checkRequirements(){
+    protected boolean checkRequirements(String selectedCategory, int condition_radio){
         boolean titleCheck = false;
         boolean categoryCheck = false;
         boolean priceCheck = false;
@@ -209,7 +209,7 @@ public class AddOffer extends CustomActivityWithMenu implements View.OnClickList
         String conditionString = "";
         if(condition.getCheckedRadioButtonId() != -1) {
             conditionCheck = true;
-            RadioGroup rg = (RadioGroup)findViewById(R.id.add_offer_condition_radio);
+            RadioGroup rg = (RadioGroup)findViewById(condition_radio);
             conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
         }
         else
