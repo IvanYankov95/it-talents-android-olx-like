@@ -249,8 +249,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Archive offer"
-                android:id="@+id/edit_offer_archive_checkbox"
+                android:text="Active"
+                android:id="@+id/edit_offer_active_checkbox"
                 android:checked="false" />
 
             <Button

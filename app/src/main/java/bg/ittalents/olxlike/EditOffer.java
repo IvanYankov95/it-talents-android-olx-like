@@ -33,7 +33,7 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
 
     private static CheckBox archiveBox;
 
-    private static boolean isArchived = false;
+    private static boolean isActive;
 
     private static String selectedCategory;
 
@@ -42,7 +42,7 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_offer);
 
-        archiveBox = (CheckBox) findViewById(R.id.edit_offer_archive_checkbox);
+        archiveBox = (CheckBox) findViewById(R.id.edit_offer_active_checkbox);
 
         mainPicture = (ImageButton) findViewById(R.id.edit_offer_main_picture);
         picture1 = (ImageButton) findViewById(R.id.edit_offer_picture1);
@@ -62,6 +62,12 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
         Bundle bundle = getIntent().getExtras();
         final long id = bundle.getLong("idOffer");
         final Offer offer = manager.getOfferByID(id);
+        isActive = offer.isActive();
+        if(isActive){
+            archiveBox.setChecked(true);
+        } else {
+            archiveBox.setChecked(false);
+        }
         ArrayList<byte[]> images = offer.getImages();
         pictures = images;
 
@@ -118,6 +124,7 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
 
         city.setText(offer.getCity());
 
+
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -162,9 +169,8 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
                     RadioGroup rg = (RadioGroup)findViewById(R.id.edit_offer_condition_radio);
                     String conditionString = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
                     long userId = Long.parseLong(user.get(session.KEY_ID));
-                    if(archiveBox.isChecked())
-                        isArchived = true;
-                    Offer of = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), isArchived, pictures, date);
+                    isActive = archiveBox.isChecked();
+                    Offer of = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), isActive, pictures, date);
                     long offerID = offerManager.updateOffer(offer.getId(), of);
                     Toast.makeText(EditOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
 

@@ -404,15 +404,17 @@ public class DBOfferDAO implements IOfferDAO {
             }
         }
 
-//        for(int i=0; i<oldImages.size(); i++){
+        for(int i=0; i<oldImages.size(); i++){
 //            String query = " DELETE FROM " + mDb.IMAGES
-//                    + " WHERE " + mDb.OFFER_ID + " = " + offerId " AND " +
-//            db.delete(mDb.IMAGES, mDb.OFFER_ID, mDb.CONTENT, vals);
-//        }
+//                    + " WHERE " + mDb.OFFER_ID + " = " + offerId + " AND " + mDb.CONTENT + " = " + oldImages.get(i)();
+//            db.rawQuery(query, null);
+            db.execSQL("DELETE FROM "+ mDb.IMAGES + " WHERE "+ mDb.OFFER_ID+" = ? AND "+ mDb.CONTENT +" = ?", new Object[]{offerId, oldImages.get(i) });
+
+        }
 
         for(int i=0; i<newImages.size(); i++){
             ContentValues vals = new ContentValues();
-            vals.put(mDb.OFFER_ID, id);
+            vals.put(mDb.OFFER_ID, offerId);
             vals.put(mDb.CONTENT, newImages.get(i));
             vals.put(mDb.IS_MAIN, false);
             db.insert(mDb.IMAGES, null, vals);
