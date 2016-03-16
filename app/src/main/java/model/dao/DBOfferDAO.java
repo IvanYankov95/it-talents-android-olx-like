@@ -134,6 +134,7 @@ public class DBOfferDAO implements IOfferDAO {
             ArrayList<byte[]> images = getImages(id);
 
             offer = new Offer(user, title, description, price, condition, category, city, active, images, null);
+            offer.setId(id);
 
         }
         c.close();

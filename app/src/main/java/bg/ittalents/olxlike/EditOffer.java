@@ -166,6 +166,7 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
                         isArchived = true;
                     Offer of = new Offer(null, title.getText().toString(), description.getText().toString(),Double.parseDouble(price.getText().toString()), conditionString, selectedCategory, city.getText().toString(), isArchived, pictures, date);
                     long offerID = offerManager.updateOffer(offer.getId(), of);
+                    Toast.makeText(EditOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
 
                     if (offerID != -1) {
                         Toast.makeText(EditOffer.this, "Offer added successfully", Toast.LENGTH_SHORT).show();
