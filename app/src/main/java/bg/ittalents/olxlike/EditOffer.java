@@ -3,7 +3,9 @@ package bg.ittalents.olxlike;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -127,6 +130,21 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
             }
         });
 
+        mainPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                String pictureDirectoryPath = pictureDirectory.getPath();
+                Uri data = Uri.parse(pictureDirectoryPath);
+
+                photoPickerIntent.setDataAndType(data, "image/*");
+
+                startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST_1);
+
+            }
+        });
+
         picture1.setOnClickListener(this);
         picture2.setOnClickListener(this);
         picture3.setOnClickListener(this);
@@ -190,35 +208,5 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK){
-
-            switch (requestCode){
-                case IMAGE_GALLERY_REQUEST_1:
-                    setPicture(mainPicture,data);
-                    break;
-                case IMAGE_GALLERY_REQUEST_2:
-                    setPicture(picture1,data);
-                    break;
-                case IMAGE_GALLERY_REQUEST_3:
-                    setPicture(picture2,data);
-                    break;
-                case IMAGE_GALLERY_REQUEST_4:
-                    setPicture(picture3,data);
-                    break;
-                case IMAGE_GALLERY_REQUEST_5:
-                    setPicture(picture4,data);
-                    break;
-                case IMAGE_GALLERY_REQUEST_6:
-                    setPicture(picture5,data);
-                    break;
-                case IMAGE_GALLERY_REQUEST_7:
-                    setPicture(picture6,data);
-                    break;
-
-            }
-        }
-    }
 }
 
