@@ -67,7 +67,7 @@ public class EditOffer extends AddOffer implements View.OnClickListener {
 
         mainPictureCheck = true;
         for (int i = 0; i < images.size(); i++){
-            Bitmap bmp = BitmapFactory.decodeByteArray(images.get(i), 0, images.get(0).length);
+            Bitmap bmp = BitmapFactory.decodeByteArray(images.get(i), 0, images.get(i).length);
             switch (i){
                 case 0:
                     mainPicture.setImageBitmap(bmp);
